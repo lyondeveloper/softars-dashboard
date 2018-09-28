@@ -2,5 +2,4 @@
 
 To install
 
-```
-    npm install
+npm install
