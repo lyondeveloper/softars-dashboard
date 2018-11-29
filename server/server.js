@@ -1,37 +1,46 @@
-//Imports of libraries and frameworks
-const express = require('express');
-const http = require('http');
-const path = require('path');
-const mongoose = require('mongoose');
-const app = express();
-const bodyParser = require('body-parser');
-
 //Imports of externals scripts
-require('./config/config');
+require("./config/config");
+require("colors");
 
-//server configuration variables
+//Imports of libraries and frameworks
+const express = require("express");
+const http = require("http");
+const path = require("path");
+const mongoose = require("mongoose");
+const app = express();
+const bodyParser = require("body-parser");
+const passport = require("passport");
+
+//Routes
+const users = require("./routes/api/users");
+
+//server configuration
 let server = http.createServer(app);
-let port = process.env.PORT;
-let publicPath = path.resolve(__dirname, '../public');
+let publicPath = path.resolve(__dirname, "../public");
 
 //middlewares
 app.use(express.static(publicPath));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(require('./routes/api/route'));
 
-mongoose.connect('mongodb://localhost:27017/softarsweb', (err) => {
+//Routes middlewares
+app.use("/api/users", users);
 
-    if (err) throw new Error("Error making the database connection");
+//Passport configuration
+app.use(passport.initialize());
+require("./config/passport")(passport);
 
-    console.log(`Database online`);
+mongoose.connect(
+  process.env.MONGOURI,
+  err => {
+    if (err) throw new Error("Error making the database connection".red);
 
-});
+    console.log(`mLab Database online`.green);
+  }
+);
 
-server.listen(port, (err) => {
+server.listen(process.env.PORT, err => {
+  if (err) throw new Error("Error making the server connection".red);
 
-    if (err) throw new Error("Error making the server connection");
-
-    console.log(`Server running in port ${port}`);
-
+  console.log(`Server running in port 3000`.yellow);
 });
