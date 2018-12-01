@@ -1,5 +1,5 @@
 const Validator = require("validator");
-const isEmpty = require("./is-empty");
+const isEmpty = require("../is-empty");
 
 const validateRegisterInput = data => {
   let errors = {};
@@ -33,7 +33,7 @@ const validateRegisterInput = data => {
   }
 
   if (!Validator.isLength(data.password, { min: 6 })) {
-    errors.password = "Password must be 6 characters minimun";
+    errors.password = "Password must be 6 characters at least";
   }
 
   if (!Validator.equals(data.password, data.password2)) {

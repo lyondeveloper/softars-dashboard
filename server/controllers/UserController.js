@@ -1,16 +1,29 @@
+require("../config/config");
+
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-const validateRegisterInput = require("../validation/register");
+const jwt = require("jsonwebtoken");
+const _ = require("underscore");
+
+//Input validations
+const validateRegisterInput = require("../validation/users/registerUser");
+const validateLoginInput = require("../validation/users/loginUser");
 
 class UserController {
-  create(req, res) {
+  async register(req, res) {
+    //Validator for input fields
     const { errors, isNotValid } = validateRegisterInput(req.body);
 
     if (!isNotValid) return res.status(400).json(errors);
 
-    User.findOne({ email: req.body.email }, (error, user) => {
+    try {
+      const user = await User.findOne({ email: req.body.email });
+
+      //User already exist with that email
       if (user) {
-        error.email = "Email already exist";
+        //Create user
+        errors.email = "Email already exist";
+        return res.status(400).json(errors);
       } else {
         const user = new User({
           name: req.body.name,
@@ -19,154 +32,103 @@ class UserController {
           date: req.body.date
         });
 
-        user.save((error, user) => {
-          if (error) console.log(error);
-
-          res.json(user);
+        const newUser = await user.save();
+        res.json({
+          success: true,
+          newUser
         });
       }
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  }
+
+  async login(req, res) {
+    //Check input fields
+    const { errors, isNotValid } = validateLoginInput(req.body);
+
+    if (!isNotValid) return res.status(400).json(errors);
+
+    try {
+      //Finding User
+      const user = await User.findOne({ email: req.body.email });
+
+      if (!user) {
+        errors.email = "Email incorrect";
+        return res.status(404).json(errors);
+      }
+
+      //Comparing password
+      const didMatch = await bcrypt.compareSync(
+        req.body.password,
+        user.password
+      );
+
+      if (didMatch) {
+        //User matched
+        const payload = {
+          id: user.id,
+          name: user.name
+        };
+
+        //Creating the JWT
+        const token = await jwt.sign(payload, process.env.TOKEN_SEED, {
+          expiresIn: process.env.TOKEN_EXPIRATION
+        });
+
+        res.json({ token: "Bearer " + token });
+      } else {
+        errors.password = "Password incorrect";
+        return res.status(404).json(errors);
+      }
+    } catch (e) {
+      return res.status(500).json(e);
+    }
+  }
+
+  getCurrentUser(req, res) {
+    res.json({
+      id: req.user.id,
+      name: req.user.name,
+      date: req.user.date,
+      password: req.user.password
     });
   }
 
-  getAll(req, res) {
-    let from = req.query.from || 0;
-    from = Number(from);
-    let limit = req.query.limit || 5;
-    limit = Number(limit);
+  async update(req, res) {
+    let errors = {};
 
-    User.find({ status: true }, "name email status role birthday img")
-      .skip(from)
-      .limit(limit)
-      .sort("name")
-      .exec((err, usersDB) => {
-        if (err) {
-          return res.status(400).json({
-            ok: false,
-            err,
-            message: "Error searching the users"
-          });
-        }
+    //Grabbing the id from the params
+    const id = req.params.id;
 
-        User.count({ status: true }, (err, count) => {
-          res.json({
-            ok: true,
-            users: usersDB,
-            totalusers: count
-          });
-        });
-      });
+    try {
+      //The new body to update the user's info
+      let newData = _.pick(req.body, ["name", "email", "date"]);
+
+      //Finding the user to update
+      const user = await User.findByIdAndUpdate(id, newData, { new: true });
+
+      //Checking if the user exist
+      if (!user) {
+        errors.userNotFound = "User could not be found";
+        return res.status(404).json(errors);
+      }
+
+      res.json(user);
+    } catch (e) {
+      return res.status(500).json(e);
+    }
   }
 
-  getByID(req, res) {
-    let id = req.params.id;
+  async delete(req, res) {
+    try {
+      //Finding the user to remove it
+      await User.findOneAndRemove({ _id: req.user.id });
 
-    User.findById(id, (err, userDB) => {
-      if (err) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Error in the searching of the user, maybe the ID is invalid"
-        });
-      }
-
-      if (!userDB) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe the user doesn't exist"
-        });
-      }
-
-      res.json({
-        ok: true,
-        user: userDB
-      });
-    });
-  }
-
-  getByName(req, res) {
-    let name = req.params.name;
-
-    let regexp = new RegExp(name, "i");
-
-    User.find({ name: regexp }).exec((err, userDB) => {
-      if (err) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe there isn't a user with that name"
-        });
-      }
-
-      if (!userDB) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe the user doesn't exist"
-        });
-      }
-
-      res.json({
-        ok: true,
-        user: userDB
-      });
-    });
-  }
-
-  update(req, res) {
-    let id = req.params.id;
-
-    let body = _.pick(req.body, ["name", "email", "img", "role", "status"]);
-
-    User.findByIdAndUpdate(id, body, { new: true }, (err, userUpdated) => {
-      if (err) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe the ID doesn't exists"
-        });
-      }
-
-      if (!userUpdated) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe the user doesn't exist"
-        });
-      }
-
-      res.json({
-        ok: true,
-        userUpdated
-      });
-    });
-  }
-
-  delete(req, res) {
-    let id = req.params.id;
-
-    User.findByIdAndRemove(id, (err, userDeleted) => {
-      if (err) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe the ID is invalid"
-        });
-      }
-
-      if (!userDeleted) {
-        return res.status(400).json({
-          ok: false,
-          err,
-          message: "Maybe the user is already deleted"
-        });
-      }
-
-      res.json({
-        ok: true,
-        userDeleted
-      });
-    });
+      res.json({ success: true });
+    } catch (e) {
+      return res.status(500).json(e);
+    }
   }
 }
 

@@ -13,6 +13,7 @@ const passport = require("passport");
 
 //Routes
 const users = require("./routes/api/users");
+const projects = require("./routes/api/projects");
 
 //server configuration
 let server = http.createServer(app);
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 
 //Routes middlewares
 app.use("/api/users", users);
+app.use("/api/projects", projects);
 
 //Passport configuration
 app.use(passport.initialize());
