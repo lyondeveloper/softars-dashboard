@@ -1,0 +1,32 @@
+/* .login {
+  background-image: url("../img/qp-1920x1080.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+} */
+
+.form-group {
+  font-size: 21px;
+  margin-top: 90px;
+  margin-left: 152px;
+  color: #0d0d0d;
+  width: 70%;
+}
+
+.form-group > input {
+  position: relative;
+  bottom: 15px;
+}
+
+.form-group > p {
+  font-weight: 500;
+}
+
+.form-group > h1 {
+  font-size: 42px;
+  font-weight: 600;
+  color: #0078a9;
+}
