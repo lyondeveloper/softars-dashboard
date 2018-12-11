@@ -39,8 +39,4 @@ mongoose.connect(
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, err => {
-  if (err) throw new Error("Error making the server connection".red);
-
-  console.log(`Server running in port 5000`.yellow);
-});
+app.listen(port, () => console.log(`Server running in port ${port}`.yellow));
