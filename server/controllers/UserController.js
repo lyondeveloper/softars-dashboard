@@ -11,12 +11,13 @@ const validateLoginInput = require("../validation/users/loginUser");
 
 class UserController {
   async register(req, res) {
-    //Validator for input fields
-    const { errors, isNotValid } = validateRegisterInput(req.body);
-
-    if (!isNotValid) return res.status(400).json(errors);
-
+    
     try {
+      //Validator for input fields
+      const { errors, isValid } = validateRegisterInput(req.body);
+  
+      if (!isValid) return res.status(400).json(errors);
+      
       const user = await User.findOne({ email: req.body.email });
 
       //User already exist with that email

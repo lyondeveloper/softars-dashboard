@@ -1,20 +1,14 @@
-.main-navbar {
-  background: #d6d2d2;
-  margin: auto;
-  max-width: 1200px;
-  border-radius: 5px;
-}
-
 .navbar-brand,
-.container > ul.navbar-nav > li.nav-item > a {
+ul.navbar-nav > li.nav-item > a {
   font-family: Ubuntu, sans-serif;
   font-size: 24px;
-  color: #0078a9 !important;
+  cursor: pointer;
 }
 
-.navbar-nav {
-  float: right;
-  position: relative;
-  bottom: 44px;
-  left: 900px;
+ul.navbar-nav > li.nav-item > a {
+  padding-right: 1rem !important;
+}
+
+.navbar-brand {
+  padding-left: 10px;
 }

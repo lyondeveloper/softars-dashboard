@@ -1,29 +1,31 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+
+//Components
 import Navbar from "./components/layout/Navbar";
+import Register from "./components/users/Register";
+import Login from "./components/users/Login";
+import Landing from "./components/layout/Landing";
 import Projects from "./components/projects/Projects";
 import AddProject from "./components/projects/AddProject";
 import EditProject from "./components/projects/EditProject";
-import About from "./components/pages/About";
-import NotFound from "./components/pages/NotFound";
-import { Provider } from "./context";
 
 class App extends Component {
   render() {
     return (
-      <Provider>
+      <Provider store={store}>
         <Router>
           <div className="App">
             <Navbar />
-
             <div className="container">
-              <Switch>
-                {/* <Route exact path="/" component={Projects} /> */}
-                {/* <Route exact path="/project/add" component={AddProject} /> */}
-                {/* <Route exact path="/project/edit/:id" component={EditProject} /> */}
-                <Route exact path="/about" component={About} />
-                {/* <Route component={NotFound} /> */}
-              </Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              {/* <Route exact path="/" component={Projects} /> */}
+              {/* <Route exact path="/project/add" component={AddProject} /> */}
+              {/* <Route exact path="/project/edit/:id" component={EditProject} /> */}
             </div>
           </div>
         </Router>

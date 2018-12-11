@@ -1,12 +1,5 @@
 /**
  *****************
- * Port Configuration
- ******************
- */
-process.env.PORT = process.env.PORT || 5000;
-
-/**
- *****************
  * Enviroment Configuration
  ******************
  */
@@ -19,8 +12,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
  ******************
  */
 
-process.env.MONGOURI = "mongodb://localhost:27017/softarsdashboard";
-// "mongodb://lyondeveloper:a123456@ds161062.mlab.com:61062/softarsweb";
+process.env.MONGOURI = "mongodb://lyondeveloper:a123456@ds161062.mlab.com:61062/softarsweb";
+// "";
 
 /**
  *****************

@@ -14,14 +14,14 @@ class Navbar extends Component {
             <div className="container">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <Link to="http://softars.com" className="nav-link">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <Link to="#" className="nav-link">
                     Login
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
