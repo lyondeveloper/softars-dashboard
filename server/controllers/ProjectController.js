@@ -8,11 +8,13 @@ const validateCreateProjectInput = require("../validation/projects");
 class ProjectController {
   //Method to create a project
   async create(req, res) {
-
     try {
-    const { errors, isNotValid } = validateCreateProjectInput(req.body);
+      //Checking for input errors
+      const { errors, isNotValid } = validateCreateProjectInput(req.body);
 
-    if (!isNotValid) return res.status(400).json(errors);
+      if (!isNotValid) return res.status(400).json(errors);
+
+      //Creating the new user data and saving it to database, in case of errors, they will be pushed to the errors object to be handle in front-end
       const { title, description, client, date, url } = req.body;
       const project = new Project({
         title,
@@ -20,6 +22,7 @@ class ProjectController {
         client,
         date,
         url,
+        type,
         user: req.user.id
       });
 
@@ -64,7 +67,8 @@ class ProjectController {
         "description",
         "client",
         "date",
-        "url"
+        "url",
+        "type"
       ]);
       const project = await Project.findByIdAndUpdate(id, newData, {
         new: true

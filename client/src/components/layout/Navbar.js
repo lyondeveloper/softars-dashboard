@@ -2,30 +2,75 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "../../css/Navbar.css";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../../actions/authActions";
+import { connect } from "react-redux";
 
 class Navbar extends Component {
+  constructor() {
+    super();
+
+    this.onLogoutClick = this.onLogoutClick.bind(this);
+  }
+
+  onLogoutClick(e) {
+    e.preventDefault();
+
+    this.props.logoutUser();
+  }
+
   render() {
     const { branding } = this.props;
+    const { isAuthenticated } = this.props.auth;
+
+    let navbarLinks;
+
+    if (!isAuthenticated) {
+      navbarLinks = (
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link to="http://softars.com" className="nav-link">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
+          </li>
+        </ul>
+      );
+    } else {
+      navbarLinks = (
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link to="http://softars.com" target="_blank" className="nav-link">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/login" className="nav-link">
+              Projects
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/account" className="nav-link">
+              Account
+            </Link>
+          </li>
+          <li className="nav-item">
+            <a href="" onClick={this.onLogoutClick} className="nav-link">
+              Log Out
+            </a>
+          </li>
+        </ul>
+      );
+    }
+
     return (
       <nav className="navbar navbar-expand-lg navbar-light main-navbar">
         <div className="container">
-          <span className="navbar-brand">
-            {branding}
-            <div className="container">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link to="http://softars.com" className="nav-link">
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="#" className="nav-link">
-                    Login
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </span>
+          <span className="navbar-brand">{branding}</span>
+          {navbarLinks}
         </div>
       </nav>
     );
@@ -37,7 +82,15 @@ Navbar.defaultProps = {
 };
 
 Navbar.propTypes = {
-  branding: PropTypes.string.isRequired
+  branding: PropTypes.string.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
-export default Navbar;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navbar);

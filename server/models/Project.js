@@ -31,6 +31,10 @@ const ProjectSchema = new Schema({
     type: String
   },
 
+  type: {
+    type: String
+  },
+
   user: {
     type: Schema.Types.ObjectId,
     ref: "user"
