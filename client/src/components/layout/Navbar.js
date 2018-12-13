@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "../../css/Navbar.css";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../actions/authActions";
+import { logoutUser, deleteUser } from "../../actions/authActions";
 import { connect } from "react-redux";
 
 class Navbar extends Component {
@@ -10,12 +11,23 @@ class Navbar extends Component {
     super();
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.onDeleteAccountClick = this.onDeleteAccountClick.bind(this);
   }
 
   onLogoutClick(e) {
     e.preventDefault();
 
     this.props.logoutUser();
+  }
+
+  onDeleteAccountClick(e) {
+    e.preventDefault();
+
+    this.props.deleteUser();
+
+    if (localStorage.jwtToken) {
+      localStorage.removeItem("jwtToken");
+    }
   }
 
   render() {
@@ -35,6 +47,11 @@ class Navbar extends Component {
           <li className="nav-item">
             <Link to="/login" className="nav-link">
               Login
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/register" className="nav-link">
+              Register
             </Link>
           </li>
         </ul>
@@ -58,9 +75,18 @@ class Navbar extends Component {
             </Link>
           </li>
           <li className="nav-item">
-            <a href="" onClick={this.onLogoutClick} className="nav-link">
+            <Link
+              to=""
+              onClick={this.onDeleteAccountClick}
+              className="nav-link"
+            >
+              Delete Account
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="" onClick={this.onLogoutClick} className="nav-link">
               Log Out
-            </a>
+            </Link>
           </li>
         </ul>
       );
@@ -83,7 +109,8 @@ Navbar.defaultProps = {
 
 Navbar.propTypes = {
   branding: PropTypes.string.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -92,5 +119,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, deleteUser }
 )(Navbar);

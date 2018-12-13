@@ -57,8 +57,6 @@ class App extends Component {
                   path="/projects/add"
                   component={AddProject}
                 />
-              </Switch>
-              <Switch>
                 <PrivateRoute
                   exact
                   path="/projects/edit/:id"

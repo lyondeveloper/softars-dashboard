@@ -15,7 +15,7 @@ class ProjectController {
       if (!isNotValid) return res.status(400).json(errors);
 
       //Creating the new user data and saving it to database, in case of errors, they will be pushed to the errors object to be handle in front-end
-      const { title, description, client, date, url } = req.body;
+      const { title, description, client, date, url, type } = req.body;
       const project = new Project({
         title,
         description,

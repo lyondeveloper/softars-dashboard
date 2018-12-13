@@ -1,7 +1,7 @@
 export const GET_ERRORS = "GET_ERRORS";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
-export const CLEAR_CURRENT_USER = "CLEAR_CURRENT_USER";
 export const GET_USER = "GET_USER";
+export const DELETE_USER = "DELETE";
 export const ADD_PROJECT = "ADD_PROJECT";
 export const GET_PROJECT = "GET_PROJECT";
 export const GET_PROJECTS = "GET_PROJECTS";

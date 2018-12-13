@@ -33,7 +33,7 @@ mongoose.connect(
   err => {
     if (err) throw new Error("Error making the database connection".red);
 
-    console.log(`mLab Database online`.green);
+    console.log(`MongoDB online`.green);
   }
 );
 

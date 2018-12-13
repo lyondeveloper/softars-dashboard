@@ -22,9 +22,16 @@ class AddProject extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onSubmit(e) {
     e.preventDefault();
 
+    //Creating the new project
     const newProject = {
       title: this.state.title,
       description: this.state.description,
@@ -34,26 +41,11 @@ class AddProject extends Component {
       date: this.state.date
     };
 
-    this.props.addProject(newProject);
-
-    this.setState({
-      title: "",
-      description: "",
-      type: "",
-      client: "",
-      url: "",
-      date: ""
-    });
+    this.props.addProject(newProject, this.props.history);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps) {
-      this.setState({ errors: nextProps.errors });
-    }
   }
 
   render() {
@@ -65,7 +57,7 @@ class AddProject extends Component {
             <div className="col-md-12">
               <h1 className="display-4 text-center">Add Project</h1>
               <p className="lead text-center">
-                Type your information to create an account
+                Type your information to add a new project
               </p>
               <form onSubmit={this.onSubmit}>
                 <TextInputGroup
@@ -131,10 +123,13 @@ class AddProject extends Component {
   }
 }
 
+//Setting up the prop types to make them required
 AddProject.propTypes = {
   addProject: PropTypes.func.isRequired,
   project: PropTypes.object.isRequired
 };
+
+//Mapping the state to props to access them globally with this.props
 
 const mapStateToProps = state => ({
   project: state.project,

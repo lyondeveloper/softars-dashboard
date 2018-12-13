@@ -15,12 +15,10 @@ const validateProjectInput = data => {
     errors.title = "Title field is required";
   }
 
-  if (Validator.isEmpty(data.url)) {
-    errors.url = "URL field is required";
-  }
-
-  if (!Validator.isURL(data.url)) {
-    errors.url = "URL field is invalid";
+  if (!Validator.isEmpty(data.url)) {
+    if (!Validator.isURL(data.url)) {
+      errors.url = "URL field is invalid";
+    }
   }
 
   if (Validator.isEmpty(data.type)) {

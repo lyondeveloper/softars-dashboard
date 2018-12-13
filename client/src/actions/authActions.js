@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, GET_ERRORS } from "./types";
+import { SET_CURRENT_USER, GET_ERRORS, DELETE_USER } from "./types";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../components/utils/setAuthToken";
@@ -25,6 +25,19 @@ export const setCurrentUser = decoded => {
     type: SET_CURRENT_USER,
     payload: decoded
   };
+};
+
+export const deleteUser = () => async dispatch => {
+  try {
+    await axios.delete("/api/users");
+
+    dispatch({
+      type: DELETE_USER,
+      payload: null
+    });
+  } catch (err) {
+    return false;
+  }
 };
 
 export const loginUser = (userData, history) => async dispatch => {

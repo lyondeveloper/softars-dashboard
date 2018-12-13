@@ -8,9 +8,11 @@ import {
   GET_ERRORS
 } from "./types";
 
-export const addProject = projectData => async dispatch => {
+export const addProject = (projectData, history) => async dispatch => {
   try {
     const res = await axios.post("/api/projects/create", projectData);
+
+    history.push("/projects");
 
     dispatch({
       type: ADD_PROJECT,

@@ -2,34 +2,49 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { getProject } from "../../actions/projectActions";
+import { Link } from "react-router-dom";
+import { getProject, deleteProject } from "../../actions/projectActions";
 
 class Project extends Component {
-  componentDidMount() {
-    this.props.getProject(this.props.match.params.id);
+  constructor() {
+    super();
+
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+  }
+
+  onDeleteClick(id) {
+    this.props.deleteProject(id);
   }
 
   render() {
-    const { project } = this.props.projects;
+    const { project } = this.props;
+    const { _id } = this.props.project;
 
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <div className="card bg-dark">
-              <div className="card-body">
-                <h5 className="card-title text-primary">
-                  {" "}
-                  {project.description}{" "}
-                </h5>
+            <div className="card bg-blue">
+              <i
+                className="fas fa-times"
+                style={{ cursor: "pointer", float: "right", color: "red" }}
+                onClick={this.onDeleteClick.bind(this, _id)}
+              />
+              <Link to={`/projects/edit/${_id}`}>
+                <i
+                  className="fas fa-pencil-alt"
+                  style={{ cursor: "pointer", float: "right", color: "green" }}
+                />
+              </Link>
+              <div className="card-body mt-4">
+                <h5 className="card-title text-primary"> {project.title} </h5>
                 <div className="card-text"> {project.description} </div>
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item"> {project.type} </li>
                   <li className="list-group-item"> {project.url}</li>
                   <li className="list-group-item"> {project.client}</li>
-                  <li className="list-group-item"> {project.date} </li>
                   <li className="list-group-item">
-                    <Moment format="YYYY/MM/DD">{this.state.date}</Moment>
+                    <Moment format="YYYY/MM/DD">{project.date}</Moment>
                   </li>
                 </ul>
               </div>
@@ -43,14 +58,10 @@ class Project extends Component {
 
 Project.propTypes = {
   getProject: PropTypes.func.isRequired,
-  project: PropTypes.object.isRequired
+  projects: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  project: state.project
-});
-
 export default connect(
-  mapStateToProps,
-  { getProject }
+  null,
+  { deleteProject, getProject }
 )(Project);

@@ -30,11 +30,15 @@ export default function(state = initialState, action) {
         ...state,
         projects: [action.payload, ...state.projects]
       };
-    // case EDIT_PROJECT:
-    //     return {
-    //         ...state,
-    //         projects: state.projects.map(project => project._id === action.payload ? projects = action.payload : projects)
-    //     }
+    case EDIT_PROJECT:
+      return {
+        ...state,
+        projects: state.projects.map(project =>
+          project._id === action.payload.id
+            ? (project = action.payload)
+            : project
+        )
+      };
     case DELETE_PROJECT:
       return {
         ...state,

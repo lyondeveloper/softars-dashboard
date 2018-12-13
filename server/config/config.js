@@ -12,8 +12,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
  ******************
  */
 
-process.env.MONGOURI = "mongodb://lyondeveloper:a123456@ds161062.mlab.com:61062/softarsweb";
-// "";
+process.env.MONGOURI =
+  "mongodb://jesus1234:jesus1234@softarsdashboard-shard-00-00-v9jya.mongodb.net:27017,softarsdashboard-shard-00-01-v9jya.mongodb.net:27017,softarsdashboard-shard-00-02-v9jya.mongodb.net:27017/test?ssl=true&replicaSet=SoftArsDashboard-shard-0&authSource=admin&retryWrites=true";
 
 /**
  *****************

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Project from "./Project";
 import { getProjects } from "../../actions/projectActions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Projects extends Component {
   componentDidMount() {
@@ -10,16 +11,28 @@ class Projects extends Component {
   }
 
   render() {
-    const { projects } = this.props.projects;
+    const { projects } = this.props;
 
     let projectContent;
 
     if (projects.length > 0) {
-      projectContent = projects.map(project => (
+      projectContent = (projects.map(project => (
         <Project key={project._id} project={project} />
-      ));
+      )));
     } else {
-      projectContent = <h4>No projects found...</h4>;
+      projectContent = (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h4>No projects found...</h4>
+              <Link to="/projects/add">
+                {" "}
+                Click here to create a new project{" "}
+              </Link>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return projectContent;
@@ -28,11 +41,11 @@ class Projects extends Component {
 
 Projects.propTypes = {
   getProjects: PropTypes.func.isRequired,
-  project: PropTypes.object.isRequired
+  projects: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  project: state.project
+  projects: state.projects.projects
 });
 
 export default connect(

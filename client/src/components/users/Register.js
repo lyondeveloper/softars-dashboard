@@ -73,7 +73,6 @@ class Register extends Component {
                   />
 
                   <TextInputGroup
-                    type="email"
                     name="email"
                     placeholder="Email"
                     onChange={this.onChange}
