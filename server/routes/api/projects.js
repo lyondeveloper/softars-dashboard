@@ -17,16 +17,24 @@ router.post(
 //@route GET /api/projects
 //@desc Get all user projects
 //@access Public
-router.get("/", (req, res) => {
-  ProjectController.getAll(req, res);
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ProjectController.getAll(req, res);
+  }
+);
 
 //@route GET /api/projects/:id
 //@desc Get projects by its ID
 //@access Public
-router.get("/:id", (req, res) => {
-  ProjectController.getById(req, res);
-});
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ProjectController.getById(req, res);
+  }
+);
 
 //@route PUT /api/projects/:id
 //@desc Update projects

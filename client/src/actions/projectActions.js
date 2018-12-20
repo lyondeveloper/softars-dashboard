@@ -5,14 +5,16 @@ import {
   ADD_PROJECT,
   EDIT_PROJECT,
   DELETE_PROJECT,
-  GET_ERRORS
+  GET_ERRORS,
+  LOADING
 } from "./types";
 
+//Create Project
 export const addProject = (projectData, history) => async dispatch => {
   try {
     const res = await axios.post("/api/projects/create", projectData);
 
-    history.push("/projects");
+    history.push("/dashboard");
 
     dispatch({
       type: ADD_PROJECT,
@@ -26,8 +28,10 @@ export const addProject = (projectData, history) => async dispatch => {
   }
 };
 
+//Get all projects
 export const getProjects = () => async dispatch => {
   try {
+    dispatch(loadingProject());
     const res = await axios.get("/api/projects");
 
     dispatch({
@@ -42,9 +46,11 @@ export const getProjects = () => async dispatch => {
   }
 };
 
+//Get project by ID
 export const getProject = id => async dispatch => {
   try {
-    const res = await axios.post(`/api/projects/${id}`);
+    dispatch(loadingProject());
+    const res = await axios.get(`/api/projects/${id}`);
 
     dispatch({
       type: GET_PROJECT,
@@ -58,6 +64,7 @@ export const getProject = id => async dispatch => {
   }
 };
 
+//Edit project
 export const editProject = (id, newData) => async dispatch => {
   try {
     const res = await axios.put(`/api/projects/${id}`, newData);
@@ -74,6 +81,7 @@ export const editProject = (id, newData) => async dispatch => {
   }
 };
 
+//Delete project
 export const deleteProject = id => async dispatch => {
   try {
     await axios.delete(`/api/projects/${id}`);
@@ -88,4 +96,10 @@ export const deleteProject = id => async dispatch => {
       payload: err.response.data
     });
   }
+};
+
+export const loadingProject = () => {
+  return {
+    type: LOADING
+  };
 };

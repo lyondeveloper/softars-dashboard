@@ -6,14 +6,10 @@ import { Link } from "react-router-dom";
 import { getProject, deleteProject } from "../../actions/projectActions";
 
 class Project extends Component {
-  constructor() {
-    super();
-
-    this.onDeleteClick = this.onDeleteClick.bind(this);
-  }
-
   onDeleteClick(id) {
-    this.props.deleteProject(id);
+    if (window.confirm("Are you sure? This action can NOT be undone")) {
+      this.props.deleteProject(id);
+    }
   }
 
   render() {

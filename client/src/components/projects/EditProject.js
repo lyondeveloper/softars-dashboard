@@ -1,30 +1,60 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import TextInputGroup from "../common/TextInputGroup";
 import { getProject, editProject } from "../../actions/projectActions";
+import isEmpty from "../../validation/is-empty";
 
 class EditProject extends Component {
-  state = {
-    title: "",
-    description: "",
-    type: "",
-    date: "",
-    url: "",
-    client: ""
-  };
+  constructor(props) {
+    super(props);
 
-  componentWillReceiveProps(nextProps, nextState) {
-    const { title, description, type, url, client, date } = nextProps.projects;
+    this.state = {
+      title: "",
+      description: "",
+      type: "",
+      date: "",
+      url: "",
+      client: "",
+      errors: {}
+    };
 
-    this.setState({
-      title,
-      description,
-      type,
-      date,
-      url,
-      client
-    });
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.projects.project);
+
+    //Checking if there are any errors
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+
+    const { project } = nextProps.projects;
+
+    if (nextProps.projects.project) {
+      //Checking if the inputs are empty, if is true it will be a empty string, else it will have their respective values
+      project.title = !isEmpty(project.title) ? project.title : "";
+      project.description = !isEmpty(project.description)
+        ? project.description
+        : "";
+      project.type = !isEmpty(project.type) ? project.type : "";
+      project.date = !isEmpty(project.date) ? project.date : "";
+      project.url = !isEmpty(project.url) ? project.url : "";
+      project.client = !isEmpty(project.client) ? project.client : "";
+
+      //Setting the state in the inputs
+      this.setState({
+        title: project.title,
+        description: project.description,
+        type: project.type,
+        date: project.date,
+        url: project.url,
+        client: project.client
+      });
+    }
   }
 
   componentDidMount() {
@@ -36,28 +66,27 @@ class EditProject extends Component {
   onSubmit = e => {
     e.preventDefault();
 
-    const { title, description, type, url, client, date } = this.state;
-
     const { id } = this.props.match.params;
 
     const newData = {
-      title,
-      description,
-      type,
-      url,
-      client,
-      date
+      title: this.state.title,
+      description: this.state.description,
+      type: this.state.type,
+      url: this.state.url,
+      client: this.state.client,
+      date: this.state.date
     };
 
     this.props.editProject(id, newData);
 
-    this.props.history.push("/projects");
+    this.props.history.push("/dashboard");
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
     const { title, description, type, url, client, date } = this.state;
+    const { errors } = this.state;
     return (
       <div className="register">
         <div className="container">
@@ -73,6 +102,7 @@ class EditProject extends Component {
                   placeholder="Title"
                   value={title}
                   onChange={this.onChange}
+                  error={errors.title}
                 />
 
                 <TextInputGroup
@@ -80,6 +110,7 @@ class EditProject extends Component {
                   placeholder="Description"
                   value={description}
                   onChange={this.onChange}
+                  error={errors.description}
                 />
 
                 <TextInputGroup
@@ -87,6 +118,7 @@ class EditProject extends Component {
                   placeholder="URL"
                   value={url}
                   onChange={this.onChange}
+                  error={errors.url}
                 />
 
                 <TextInputGroup
@@ -94,6 +126,7 @@ class EditProject extends Component {
                   placeholder="Client"
                   value={client}
                   onChange={this.onChange}
+                  error={errors.client}
                 />
 
                 <TextInputGroup
@@ -101,6 +134,7 @@ class EditProject extends Component {
                   placeholder="Type"
                   value={type}
                   onChange={this.onChange}
+                  error={errors.type}
                 />
 
                 <TextInputGroup
@@ -109,6 +143,7 @@ class EditProject extends Component {
                   placeholder="Date"
                   value={date}
                   onChange={this.onChange}
+                  error={errors.date}
                 />
 
                 <input
@@ -128,14 +163,16 @@ class EditProject extends Component {
 EditProject.propTypes = {
   editProject: PropTypes.func.isRequired,
   getProject: PropTypes.func.isRequired,
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  project: state.projects.project
+  projects: state.projects,
+  errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
   { getProject, editProject }
-)(EditProject);
+)(withRouter(EditProject));

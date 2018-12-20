@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "../../css/Navbar.css";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { logoutUser, deleteUser } from "../../actions/authActions";
 import { connect } from "react-redux";
@@ -40,7 +39,7 @@ class Navbar extends Component {
       navbarLinks = (
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link to="http://softars.com" className="nav-link">
+            <Link to="/" className="nav-link">
               Home
             </Link>
           </li>
@@ -60,12 +59,12 @@ class Navbar extends Component {
       navbarLinks = (
         <ul className="navbar-nav">
           <li className="nav-item">
-            <Link to="http://softars.com" target="_blank" className="nav-link">
+            <Link to="/" className="nav-link">
               Home
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/login" className="nav-link">
+            <Link to="/dashboard" className="nav-link">
               Projects
             </Link>
           </li>

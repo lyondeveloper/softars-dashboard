@@ -108,6 +108,17 @@ class AddProject extends Component {
                   onChange={this.onChange}
                   error={errors.date}
                 />
+                {/* <form enctype="multipart/form-data">
+                  <div className="custom-file">
+                    <input
+                      type="file"
+                      name="file"
+                      id="file"
+                      class="custom-file form-control form-control-lg"
+                    />
+                    <label htmlFor="file" class="custom-file-label" />
+                  </div>
+                </form> */}
 
                 <input
                   className="btn mt-4 btn-block btn-primary"

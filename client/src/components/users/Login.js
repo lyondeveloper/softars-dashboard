@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import TextInputGroup from "../common/TextInputGroup";
 import { loginUser } from "../../actions/authActions";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -53,11 +54,16 @@ class Login extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
+              <h4 className="text-primary">
+                <Link to="/register">
+                  <i className="fas fa-arrow-circle-left" /> Back to Register
+                </Link>
+              </h4>
               <div className="form-group">
                 <h1 className="display-4 text-center">Log In</h1>
-                <p className="lead text-center text-primary mt-4">
+                <h3 className="lead text-center text-primary mt-4 mb-3">
                   Log in using your SoftArs account information...
-                </p>
+                </h3>
                 <form onSubmit={this.onSubmit}>
                   <TextInputGroup
                     type="email"

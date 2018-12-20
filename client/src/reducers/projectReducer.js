@@ -3,26 +3,35 @@ import {
   EDIT_PROJECT,
   GET_PROJECTS,
   GET_PROJECT,
-  DELETE_PROJECT
+  DELETE_PROJECT,
+  LOADING
 } from "../actions/types";
 
 const initialState = {
   projects: [],
-  project: {}
+  project: {},
+  loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case LOADING:
+      return {
+        ...state,
+        loading: true
+      };
     case GET_PROJECT:
       return {
         ...state,
-        project: action.payload
+        project: action.payload,
+        loading: false
       };
 
     case GET_PROJECTS:
       return {
         ...state,
-        projects: action.payload
+        projects: action.payload,
+        loading: false
       };
 
     case ADD_PROJECT:

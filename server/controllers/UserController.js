@@ -6,18 +6,18 @@ const jwt = require("jsonwebtoken");
 const _ = require("underscore");
 
 //Input validations
-const validateRegisterInput = require("../validation/users/registerUser");
-const validateLoginInput = require("../validation/users/loginUser");
+const InputValidation = require("../validation/InputValidation");
 
 class UserController {
   async register(req, res) {
-    
     try {
-      //Validator for input fields
-      const { errors, isValid } = validateRegisterInput(req.body);
-  
+      //Check input fields
+      const { errors, isValid } = InputValidation.validateRegisterInput(
+        req.body
+      );
+
       if (!isValid) return res.status(400).json(errors);
-      
+
       const user = await User.findOne({ email: req.body.email });
 
       //User already exist with that email
@@ -46,9 +46,9 @@ class UserController {
 
   async login(req, res) {
     //Check input fields
-    const { errors, isNotValid } = validateLoginInput(req.body);
+    const { errors, isValid } = InputValidation.validateLoginInput(req.body);
 
-    if (!isNotValid) return res.status(400).json(errors);
+    if (!isValid) return res.status(400).json(errors);
 
     try {
       //Finding User
@@ -97,12 +97,15 @@ class UserController {
   }
 
   async update(req, res) {
-    let errors = {};
-
-    //Grabbing the id from the params
-    const id = req.params.id;
-
     try {
+      //Grabbing the id from the params
+      const id = req.params.id;
+      const { errors, isValid } = InputValidation.validateRegisterInput(
+        req.body
+      );
+
+      if (!isValid) return res.status(400).json(errors);
+
       //The new body to update the user's info
       let newData = _.pick(req.body, ["name", "email", "date"]);
 

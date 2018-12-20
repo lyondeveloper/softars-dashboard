@@ -31,9 +31,8 @@ require("./config/passport")(passport);
 mongoose.connect(
   process.env.MONGOURI,
   err => {
-    if (err) throw new Error("Error making the database connection".red);
-
-    console.log(`MongoDB online`.green);
+    if (err) throw new Error("Error connecting to MongoDB".red);
+    console.log("MongoDB connected".green);
   }
 );
 

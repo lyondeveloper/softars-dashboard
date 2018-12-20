@@ -1,21 +1,25 @@
 require("../config/config");
 const _ = require("underscore");
 const Project = require("../models/Project");
+// const gfs = require("../config/gfs").gfs;
 
 //Input Validations
-const validateCreateProjectInput = require("../validation/projects");
+const InputValidation = require("../validation/InputValidation");
 
 class ProjectController {
   //Method to create a project
   async create(req, res) {
     try {
       //Checking for input errors
-      const { errors, isNotValid } = validateCreateProjectInput(req.body);
+      const { errors, isValid } = InputValidation.validateProjectInput(
+        req.body
+      );
 
-      if (!isNotValid) return res.status(400).json(errors);
+      if (!isValid) return res.status(400).json(errors);
 
       //Creating the new user data and saving it to database, in case of errors, they will be pushed to the errors object to be handle in front-end
-      const { title, description, client, date, url, type } = req.body;
+      const { title, description, client, date, url, type, img } = req.body;
+
       const project = new Project({
         title,
         description,
@@ -59,9 +63,17 @@ class ProjectController {
 
   //Method to update a project
   async update(req, res) {
-    const { id } = req.params;
-
     try {
+      //Check for input fields
+      const { errors, isValid } = InputValidation.validateProjectInput(
+        req.body
+      );
+
+      if (!isValid) return res.status(400).json(errors);
+
+      const { id } = req.params;
+
+      //Creating new data and pushing it to collection
       const newData = _.pick(req.body, [
         "title",
         "description",
@@ -94,6 +106,4 @@ class ProjectController {
   }
 }
 
-const projectController = new ProjectController();
-
-module.exports = projectController;
+module.exports = new ProjectController();
