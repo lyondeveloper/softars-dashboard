@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+      integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/navbar-authenticated.css" />
+    <link rel="stylesheet" href="./css/navbar-no-authenticated.css" />
+    <link rel="stylesheet" href="./css/profile.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+    <title>Landing</title>
+  </head>
+  <body>
+    <!-- Navbar (not authenticated) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a href="dashboard.html" class="navbar-brand text-secondary">Dashboard</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarMain"
+        aria-controls="navbarMain"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="#" class="nav-link"> Home </a></li>
+          <li class="nav-item"><a href="#" class="nav-link"> Sign Up </a></li>
+
+          <li class="nav-item"><a href="#" class="nav-link"> Log In </a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Profile-->
+    <div class="profile">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-body bg-info text-white">
+              <!-- Block 1 -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <img
+                      src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+                      alt=""
+                      class="rounded-circle"
+                    />
+                  </div>
+                  <div class="text-center">
+                    <h1>Jesus Rincon</h1>
+                    <div class="container container-buttons">
+                      <button class="btn btn-warning">Edit Account</button>
+                      <button class="btn btn-danger">Delete Account</button>
+                    </div>
+                    <h4 class="lead mt-4">Currently Position At SoftArs</h4>
+                    <h4 class="mt-4">Web Developer</h4>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="bio">
+                    <h3 class="text-center">Jesus's Bio</h3>
+                    <p class="lead mt-3 text-justify">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                      Maxime, numquam ipsa ipsum magnam ad laborum error nulla,
+                      facere saepe dicta odio corrupti earum aut aliquid
+                      aspernatur optio facilis eos vero.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- Block 2 -->
+              <div class="row info">
+                <div class="col-md-4">
+                  <h3 class="text-center">
+                    Website
+                    <p class="lead mt-4 text-center">www.softars.com/lyon</p>
+                  </h3>
+                </div>
+                <div class="col-md-4">
+                  <h3 class="text-center">
+                    Profession
+                    <p class="lead mt-4 text-center">Computation Engineer</p>
+                  </h3>
+                </div>
+                <div class="col-md-4">
+                  <h3 class="text-center">
+                    Country
+                    <p class="lead mt-4 text-center">Venezuela</p>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-dark footer">
+      <h6>Copyright &copy; 2015 - 2018 SoftArs</h6>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

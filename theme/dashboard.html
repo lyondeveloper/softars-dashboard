@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Ubuntu:400,700"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+    <title>Landing</title>
+  </head>
+  <body>
+    <!-- Navbar (not authenticated)-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a href="dashboard.html" class="navbar-brand text-secondary">Dashboard</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarMain"
+        aria-controls="navbarMain"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="#" class="nav-link"> Home </a></li>
+          <li class="nav-item"><a href="#" class="nav-link"> Sign Up </a></li>
+
+          <li class="nav-item"><a href="#" class="nav-link"> Log In </a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Navbar Authenticated
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a href="dashboard.html" class="navbar-brand text-secondary">Dashboard</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarMain"
+        aria-controls="navbarMain"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="#" class="nav-link"> Home </a></li>
+          <li class="nav-item"><a href="#" class="nav-link"> Projects </a></li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Account
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="profile.html">View Account</a>
+              <a class="dropdown-item" href="settings.html">Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Log Out</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    -->
+
+    <!-- Body -->
+    <div class="projects">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="text-center title">
+            <span class="fas fa-desktop"></span> Projects List
+          </h3>
+        </div>
+      </div>
+      <!-- Project Information Block -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="container">
+            <div class="jumbotron">
+              <table class="table table-striped">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Client</th>
+                    <th>Type</th>
+                    <th>Url</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Lorusso</th>
+                    <th>Lorusso website restructuration</th>
+                    <th>08/10/2018</th>
+                    <th>Lorusso Inc.</th>
+                    <th>WebSite</th>
+                    <th>
+                      <a href="http://softars.com/lorusso">
+                        <span class="link-text">Click here to visit</span>
+                      </a>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark footer">
+      <h6>Copyright &copy; 2018 SoftArs</h6>
+    </footer>
+  </body>
+</html>
