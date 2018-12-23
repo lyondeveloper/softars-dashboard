@@ -13,9 +13,10 @@ const passport = require("passport");
 //Routes
 const users = require("./routes/api/users");
 const projects = require("./routes/api/projects");
-const publicPath = path.resolve(__dirname, "../public");
+const profiles = require("./routes/api/profiles");
 
 //middlewares
+const publicPath = path.resolve(__dirname, "../public");
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 //Routes middlewares
 app.use("/api/users", users);
 app.use("/api/projects", projects);
+app.use("/api/profiles", profiles);
 
 //Passport configuration
 app.use(passport.initialize());
@@ -36,6 +38,6 @@ mongoose.connect(
   }
 );
 
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => console.log(`Server running in port ${port}`.yellow));
+app.listen(process.env.PORT, () =>
+  console.log(`Server running in port ${process.env.PORT}`.yellow)
+);

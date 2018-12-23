@@ -2,84 +2,80 @@ const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
 class InputValidation {
-  constructor() {
-    this.errors = {};
-  }
-
   //Login Input Validation
   validateLoginInput(data) {
-    this.errors = {};
+    let errors = {};
 
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
 
     if (Validator.isEmpty(data.email)) {
-      this.errors.email = "Email field is required";
+      errors.email = "Email field is required";
     }
 
     if (!Validator.isEmail(data.email)) {
-      this.errors.email = "Email is invalid";
+      errors.email = "Email is invalid";
     }
 
     if (Validator.isEmpty(data.password)) {
-      this.errors.password = "Password field is required";
+      errors.password = "Password field is required";
     }
 
     return {
-      errors: this.errors,
-      isValid: isEmpty(this.errors)
+      errors,
+      isValid: isEmpty(errors)
     };
   }
 
   //Registration input validation
   validateRegisterInput(data) {
-    this.errors = {};
+    let errors = {};
 
     data.name = !isEmpty(data.name) ? data.name : "";
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
 
     if (!Validator.isLength(data.name, { min: 2, max: 20 })) {
-      this.errors.name = "Name must be between 2 and 20 characters";
+      errors.name = "Name must be between 2 and 20 characters";
     }
 
     if (Validator.isEmpty(data.name)) {
-      this.errors.name = "Name field is required";
+      errors.name = "Name field is required";
     }
 
     if (Validator.isEmpty(data.email)) {
-      this.errors.email = "Email field is required";
+      errors.email = "Email field is required";
     }
 
     if (!Validator.isEmail(data.email)) {
-      this.errors.email = "Email field is invalid";
+      errors.email = "Email field is invalid";
     }
 
     if (Validator.isEmpty(data.password)) {
-      this.errors.password = "Password field is required";
+      errors.password = "Password field is required";
     }
 
     if (Validator.isEmpty(data.password2)) {
-      this.errors.password2 = "Confirm password field is required";
+      errors.password2 = "Confirm password field is required";
     }
 
     if (!Validator.isLength(data.password, { min: 6 })) {
-      this.errors.password = "Password must be 6 characters at least";
+      errors.password = "Password must be 6 characters at least";
     }
 
     if (!Validator.equals(data.password, data.password2)) {
-      this.errors.password = "Passwords must match";
+      errors.password = "Passwords must match";
     }
 
     return {
-      errors: this.errors,
-      isValid: isEmpty(this.errors)
+      errors,
+      isValid: isEmpty(errors)
     };
   }
 
   //Project Input Validation
   validateProjectInput(data) {
-    this.errors = {};
+    let errors = {};
 
     data.title = !isEmpty(data.title) ? data.title : "";
     data.description = !isEmpty(data.description) ? data.description : "";
@@ -89,38 +85,78 @@ class InputValidation {
     data.date = !isEmpty(data.date) ? data.date : "";
 
     if (Validator.isEmpty(data.title)) {
-      this.errors.title = "Title field is required";
+      errors.title = "Title field is required";
     }
 
     if (!Validator.isEmpty(data.url)) {
       if (!Validator.isURL(data.url)) {
-        this.errors.url = "URL field is invalid";
+        errors.url = "URL field is invalid";
       }
     }
 
     if (Validator.isEmpty(data.type)) {
-      this.errors.type = "Type field is required";
+      errors.type = "Type field is required";
     }
 
     if (Validator.isEmpty(data.date)) {
-      this.errors.date = "Date field is required";
+      errors.date = "Date field is required";
     }
 
     if (Validator.isEmpty(data.client)) {
-      this.errors.client = "Client field is required";
+      errors.client = "Client field is required";
     }
 
     if (Validator.isEmpty(data.description)) {
-      this.errors.description = "Description field is required";
+      errors.description = "Description field is required";
     }
 
     if (!Validator.isLength(data.description, { min: 5 })) {
-      this.errors.description = "Description must be 5 characters at least";
+      errors.description = "Description must be 5 characters at least";
     }
 
     return {
-      errors: this.errors,
-      isValid: isEmpty(this.errors)
+      errors,
+      isValid: isEmpty(errors)
+    };
+  }
+
+  //Profile Input Validation
+  validateProfileInput(data) {
+    let errors = {};
+
+    data.handle = !isEmpty(data.handle) ? data.handle : "";
+    data.website = !isEmpty(data.website) ? data.website : "";
+    data.profession = !isEmpty(data.profession) ? data.profession : "";
+    data.ocupation = !isEmpty(data.ocupation) ? data.ocupation : "";
+    data.bio = !isEmpty(data.bio) ? data.bio : "";
+    data.country = !isEmpty(data.country) ? data.country : "";
+
+    //Checking if fields are empty
+    if (Validator.isEmpty(data.handle)) {
+      errors.handle = "Handle field is required";
+    }
+    if (Validator.isEmpty(data.profession)) {
+      errors.profession = "Profession field is required";
+    }
+    if (Validator.isEmpty(data.ocupation)) {
+      errors.ocupation = "Ocupation field is required";
+    }
+
+    //Checking for the length
+    if (!Validator.isLength(data.handle, { min: 2 })) {
+      errors.handle = "Handle field must be at least 2 characters";
+    }
+    if (!Validator.isLength(data.bio, { min: 10, max: 50 })) {
+      errors.bio = "Bio field must be between 10 and 50 characters";
+    }
+
+    if (!Validator.isURL(data.website)) {
+      errors.website = "Website field is invalid";
+    }
+
+    return {
+      errors,
+      isValid: isEmpty(errors)
     };
   }
 }

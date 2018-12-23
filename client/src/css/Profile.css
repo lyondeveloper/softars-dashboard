@@ -1,0 +1,30 @@
+/* Profile Style */
+
+.profile {
+  margin-top: 30px;
+}
+
+.card > .text-center > h4,
+.card > .text-center > h4 {
+  font-size: 24px;
+}
+
+.info {
+  margin-top: 60px;
+}
+
+img {
+  margin: 0 auto;
+}
+
+.bio {
+  margin-top: 90px;
+}
+
+.container-buttons {
+  margin-top: 10px;
+}
+
+.btn {
+  margin-right: 15px;
+}

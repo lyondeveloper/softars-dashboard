@@ -8,6 +8,13 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 
 /**
  *****************
+ * Port Configuration
+ ******************
+ */
+process.env.PORT = process.env.PORT || 5000;
+
+/**
+ *****************
  * Database Configuration
  ******************
  */

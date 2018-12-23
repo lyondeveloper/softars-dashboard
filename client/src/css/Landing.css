@@ -1,9 +1,11 @@
+/* Landing Style */
+
 img {
   width: 100%;
 }
 
 .landing {
-  background-image: url("../img/qp-1920x1080.jpg");
+  background-image: url("../img/bg-softars.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -11,14 +13,12 @@ img {
   width: 100%;
   height: 100%;
 }
+.container {
+  margin-top: 190px;
+}
 
 .landing-body {
   text-align: center;
-  margin-top: 92px;
-}
-
-.landing-body > p {
-  text-align: justify;
 }
 
 .jumbotron {

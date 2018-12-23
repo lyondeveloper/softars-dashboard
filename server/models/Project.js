@@ -1,5 +1,5 @@
-const Mongoose = require("mongoose");
-const Schema = Mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema({
   title: {
@@ -41,4 +41,4 @@ const ProjectSchema = new Schema({
   }
 });
 
-module.exports = Project = Mongoose.model("project", ProjectSchema);
+module.exports = Project = mongoose.model("project", ProjectSchema);
