@@ -123,17 +123,6 @@ class UserController {
       return res.status(500).json(e);
     }
   }
-
-  async delete(req, res) {
-    try {
-      //Finding the user to remove it
-      await User.findOneAndRemove({ _id: req.user.id });
-
-      res.json({ success: true });
-    } catch (e) {
-      return res.status(500).json(e);
-    }
-  }
 }
 
 module.exports = new UserController();

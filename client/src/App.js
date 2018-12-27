@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 
 //Components
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 import Register from "./components/users/Register";
 import Login from "./components/users/Login";
 import Landing from "./components/layout/Landing";
@@ -17,6 +18,15 @@ import PrivateRoute from "./components/common/PrivateRoute";
 //Actions and reducers
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import setAuthToken from "./components/utils/setAuthToken";
+
+//Styles
+import "./css/Footer.css";
+import "./css/Dashboard.css";
+import "./css/Landing.css";
+import "./css/Login.css";
+import "./css/Navbar.css";
+import "./css/Profile.css";
+import "./css/Register.css";
 
 if (localStorage.jwtToken) {
   // If the token exist
@@ -66,6 +76,7 @@ class App extends Component {
                 />
               </Switch>
             </div>
+            <Footer />
           </div>
         </Router>
       </Provider>

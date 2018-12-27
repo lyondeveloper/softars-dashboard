@@ -7,10 +7,39 @@ const ProfileController = require("../../controllers/ProfileController");
 //@desc Create profile if you don't have one, edit it if you do
 //@access Private
 router.post(
-  "/",
+  "/create",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     ProfileController.createOrEdit(req, res);
+  }
+);
+
+//@route GET /api/profiles
+//@desc Get all profiles
+//@access Public
+router.get("/", (req, res) => {
+  ProfileController.getAll(req, res);
+});
+
+//@route GET /api/profiles/handle
+//@desc Get profile by handle
+//@access Private
+router.get(
+  "/:handle",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ProfileController.getByHandle(req, res);
+  }
+);
+
+//@route GET /api/profiles
+//@desc Get all profiles
+//@access Public
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ProfileController.delete(req, res);
   }
 );
 

@@ -127,7 +127,7 @@ class InputValidation {
     data.handle = !isEmpty(data.handle) ? data.handle : "";
     data.website = !isEmpty(data.website) ? data.website : "";
     data.profession = !isEmpty(data.profession) ? data.profession : "";
-    data.ocupation = !isEmpty(data.ocupation) ? data.ocupation : "";
+    data.occupation = !isEmpty(data.occupation) ? data.occupation : "";
     data.bio = !isEmpty(data.bio) ? data.bio : "";
     data.country = !isEmpty(data.country) ? data.country : "";
 
@@ -138,8 +138,8 @@ class InputValidation {
     if (Validator.isEmpty(data.profession)) {
       errors.profession = "Profession field is required";
     }
-    if (Validator.isEmpty(data.ocupation)) {
-      errors.ocupation = "Ocupation field is required";
+    if (Validator.isEmpty(data.occupation)) {
+      errors.occupation = "Occupation field is required";
     }
 
     //Checking for the length

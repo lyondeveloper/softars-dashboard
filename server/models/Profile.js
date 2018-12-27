@@ -12,7 +12,7 @@ const ProfileSchema = new Schema({
     required: true
   },
 
-  ocupation: {
+  occupation: {
     type: String,
     required: true
   },
@@ -27,6 +27,11 @@ const ProfileSchema = new Schema({
 
   bio: {
     type: String
+  },
+
+  date: {
+    type: Date,
+    default: Date.now
   },
 
   user: {
