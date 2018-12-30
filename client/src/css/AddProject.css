@@ -1,27 +1,30 @@
-/* Add Project Style */
-form {
-  margin-top: 25px;
-}
-.form-group {
+.register .form-group {
   margin: 0 auto;
-  margin-top: 60px;
+  margin-top: 30px;
   font-size: 21px;
   color: #0d0d0d;
   width: 70%;
 }
 
-.form-group > h1 {
+.register .form-group > h1 {
   color: #007bff;
   font-size: 42px;
   font-weight: 500;
   margin-top: 15px;
 }
 
-.form-group > h4 {
+.register .form-group > h4 {
   color: #007bff;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 
-.form-control {
+.register .form-control {
   margin-bottom: 15px;
+}
+
+.register .btn {
+  margin: 0 auto;
+  width: 70% !important;
+  margin-bottom: 30px;
 }

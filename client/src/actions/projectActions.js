@@ -14,7 +14,7 @@ export const addProject = (projectData, history) => async dispatch => {
   try {
     const res = await axios.post("/api/projects/create", projectData);
 
-    history.push("/dashboard");
+    history.push("/projects");
 
     dispatch({
       type: ADD_PROJECT,

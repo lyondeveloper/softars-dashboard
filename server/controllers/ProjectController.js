@@ -1,7 +1,5 @@
 require("../config/config");
-const _ = require("underscore");
 const Project = require("../models/Project");
-// const gfs = require("../config/gfs").gfs;
 
 //Input Validations
 const InputValidation = require("../validation/InputValidation");
@@ -18,22 +16,26 @@ class ProjectController {
       if (!isValid) return res.status(400).json(errors);
 
       //Creating the new user data and saving it to database, in case of errors, they will be pushed to the errors object to be handle in front-end
-      const { title, description, client, date, url, type, img } = req.body;
 
-      const project = new Project({
-        title,
-        description,
-        client,
-        date,
-        url,
-        type,
-        user: req.user.id
-      });
+      const projectFields = {};
+
+      projectFields.user = req.user.id;
+
+      if (req.body.title) projectFields.title = req.body.title;
+      if (req.body.description)
+        projectFields.description = req.body.description;
+      if (req.body.client) projectFields.client = req.body.client;
+      if (req.body.url) projectFields.url = req.body.url;
+      if (req.body.type) projectFields.type = req.body.type;
+      if (req.body.date) projectFields.date = req.body.date;
+
+      const project = new Project(projectFields);
 
       await project.save();
+
       res.json(project);
     } catch (error) {
-      return res.status(500).json(error);
+      console.log(error);
     }
   }
 
@@ -49,9 +51,9 @@ class ProjectController {
 
   //Method to get a project by its ID
   async getById(req, res) {
-    let errors = {};
+    const errors = {};
     try {
-      let id = req.params.id;
+      const id = req.params.id;
       const project = await Project.findById(id);
 
       res.json(project);
@@ -71,24 +73,29 @@ class ProjectController {
 
       if (!isValid) return res.status(400).json(errors);
 
-      const { id } = req.params;
+      const projectFields = {};
 
-      //Creating new data and pushing it to collection
-      const newData = _.pick(req.body, [
-        "title",
-        "description",
-        "client",
-        "date",
-        "url",
-        "type"
-      ]);
-      const project = await Project.findByIdAndUpdate(id, newData, {
-        new: true
-      });
+      if (req.body.title) projectFields.title = req.body.title;
+      if (req.body.description)
+        projectFields.description = req.body.description;
+      if (req.body.client) projectFields.client = req.body.client;
+      if (req.body.url) projectFields.url = req.body.url;
+      if (req.body.type) projectFields.type = req.body.type;
+      if (req.body.date) projectFields.date = req.body.date;
 
-      res.json(project);
+      const projectUpdated = await Project.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: projectFields
+        },
+        {
+          new: true
+        }
+      );
+
+      res.json(projectUpdated);
     } catch (error) {
-      return res.status(500).json(error);
+      console.log(error);
     }
   }
 

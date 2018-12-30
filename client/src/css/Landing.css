@@ -1,5 +1,3 @@
-/* Landing Style */
-
 img {
   width: 100%;
 }
@@ -13,18 +11,27 @@ img {
   width: 100%;
   height: 100%;
 }
-.container {
-  margin-top: 190px;
-}
 
 .landing-body {
   text-align: center;
 }
 
-.jumbotron {
+.landing-jumbotron {
   opacity: 0.9;
+  margin-top: 60px !important;
+  background-color: white !important;
 }
 
-.jumbotron > .title > .btn {
+.landing-jumbotron > h1 {
+  color: #0078a9 !important;
+  font-size: 62px;
+}
+
+.landing-jumbotron > p {
+  color: black;
+  font-size: 31px;
+}
+
+.landing-jumbotron > .btn {
   opacity: 1;
 }

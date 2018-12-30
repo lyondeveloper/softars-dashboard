@@ -3,7 +3,6 @@ require("../config/config");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const _ = require("underscore");
 
 //Input validations
 const InputValidation = require("../validation/InputValidation");

@@ -25,8 +25,6 @@ class EditProject extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.projects.project);
-
     //Checking if there are any errors
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -79,79 +77,76 @@ class EditProject extends Component {
 
     this.props.editProject(id, newData);
 
-    this.props.history.push("/dashboard");
+    this.props.history.push("/projects");
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    const { title, description, type, url, client, date } = this.state;
     const { errors } = this.state;
     return (
       <div className="register">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="display-4 text-center">Edit Project</h1>
-              <p className="lead text-center">
-                Type your information to edit a project
-              </p>
-              <form onSubmit={this.onSubmit}>
-                <TextInputGroup
-                  name="title"
-                  placeholder="Title"
-                  value={title}
-                  onChange={this.onChange}
-                  error={errors.title}
-                />
+              <div className="form-group">
+                <h1 className="display-4 text-center">Edit Project</h1>
+                <h4 className="lead text-center">
+                  Type the project's new data
+                </h4>
+                <form onSubmit={this.onSubmit}>
+                  <TextInputGroup
+                    name="title"
+                    placeholder="Title"
+                    onChange={this.onChange}
+                    value={this.state.title}
+                    error={errors.title}
+                  />
+                  <TextInputGroup
+                    name="description"
+                    placeholder="Description"
+                    onChange={this.onChange}
+                    value={this.state.description}
+                    error={errors.description}
+                  />
+                  <TextInputGroup
+                    name="url"
+                    placeholder="Url"
+                    onChange={this.onChange}
+                    value={this.state.url}
+                    error={errors.url}
+                  />
+                  <TextInputGroup
+                    name="client"
+                    placeholder="Client"
+                    onChange={this.onChange}
+                    value={this.state.client}
+                    error={errors.client}
+                  />
+                  <TextInputGroup
+                    type="text"
+                    name="date"
+                    placeholder="Type"
+                    onChange={this.onChange}
+                    value={this.state.type}
+                    error={errors.type}
+                  />
+                  <TextInputGroup
+                    type="date"
+                    name="date"
+                    placeholder="Date"
+                    onChange={this.onChange}
+                    value={this.state.date}
+                    error={errors.date}
+                  />
 
-                <TextInputGroup
-                  name="description"
-                  placeholder="Description"
-                  value={description}
-                  onChange={this.onChange}
-                  error={errors.description}
-                />
-
-                <TextInputGroup
-                  name="url"
-                  placeholder="URL"
-                  value={url}
-                  onChange={this.onChange}
-                  error={errors.url}
-                />
-
-                <TextInputGroup
-                  name="client"
-                  placeholder="Client"
-                  value={client}
-                  onChange={this.onChange}
-                  error={errors.client}
-                />
-
-                <TextInputGroup
-                  name="type"
-                  placeholder="Type"
-                  value={type}
-                  onChange={this.onChange}
-                  error={errors.type}
-                />
-
-                <TextInputGroup
-                  type="date"
-                  name="date"
-                  placeholder="Date"
-                  value={date}
-                  onChange={this.onChange}
-                  error={errors.date}
-                />
-
-                <input
-                  className="btn mt-4 btn-block btn-primary"
-                  value="Create"
-                  type="submit"
-                />
-              </form>
+                  <input
+                    className="btn mt-4 btn-block btn-primary"
+                    type="submit"
+                    value="Update"
+                  />
+                </form>
+              </div>
             </div>
           </div>
         </div>

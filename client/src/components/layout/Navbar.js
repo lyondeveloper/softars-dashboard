@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "../../css/Navbar.css";
 import { Link } from "react-router-dom";
 import { logoutUser, deleteUser } from "../../actions/authActions";
 import { connect } from "react-redux";
+
+import "../../css/Navbar.css";
+import logo from "../../img/logo-softars.b4151b4c.svg";
 
 class Navbar extends Component {
   constructor() {
@@ -38,10 +40,11 @@ class Navbar extends Component {
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a
             href="http://softars.com"
+            rel="noopener noreferrer"
             className="navbar-brand text-secondary"
             target="_blank"
           >
-            SoftArs
+            <img src={logo} alt="SoftArs" />
           </a>
           <button
             className="navbar-toggler"
@@ -64,14 +67,14 @@ class Navbar extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="" className="nav-link">
+                <Link to="/register" className="nav-link">
                   {" "}
                   Sign Up{" "}
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link to="" className="nav-link">
+                <Link to="login" className="nav-link">
                   {" "}
                   Log In{" "}
                 </Link>
@@ -82,13 +85,14 @@ class Navbar extends Component {
       );
     } else {
       navbarLinks = (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
           <a
             href="http://softars.com"
-            target="_blank"
+            rel="noopener noreferrer"
             className="navbar-brand text-secondary"
+            target="_blank"
           >
-            SoftArs
+            <img src={logo} alt="SoftArs" />
           </a>
           <Link to="/" className="navbar-brand text-secondary">
             Home
@@ -122,7 +126,7 @@ class Navbar extends Component {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="#!"
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
@@ -132,7 +136,7 @@ class Navbar extends Component {
                   Account
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="/profile">
+                  <Link className="dropdown-item" to={`/profile/`}>
                     View Account
                   </Link>
                   <div className="dropdown-divider" />

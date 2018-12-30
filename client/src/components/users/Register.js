@@ -4,6 +4,9 @@ import { withRouter } from "react-router-dom";
 import { registerUser } from "../../actions/authActions";
 import TextInputGroup from "../common/TextInputGroup";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
+import "../../css/Register.css";
 
 class Register extends Component {
   constructor() {
@@ -13,6 +16,7 @@ class Register extends Component {
       email: "",
       password: "",
       password2: "",
+      birthday: "",
       errors: {}
     };
 
@@ -57,51 +61,58 @@ class Register extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="form-group">
-                <h1 className="display-4 text-center">Create Account</h1>
-                <p className="lead text-center">
+              <div className="form-group form-group-register">
+                <Link to="/">
+                  <i className="fas fa-arrow-circle-left" /> Back to Home
+                </Link>
+                <h1 className="display-4 text-center">Sign Up</h1>
+                <h4 className="lead text-center">
                   Type your information to create an account
-                </p>
-
+                </h4>
                 <form onSubmit={this.onSubmit}>
                   <TextInputGroup
-                    placeholder="Name"
                     name="name"
+                    placeholder="Name"
                     value={this.state.name}
-                    onChange={this.onChange}
                     error={errors.name}
-                  />
-
-                  <TextInputGroup
-                    name="email"
-                    placeholder="Email"
                     onChange={this.onChange}
-                    error={errors.email}
-                    value={this.state.email}
                   />
-
+                  <TextInputGroup
+                    type="email"
+                    name="email"
+                    placeholder="Email address"
+                    value={this.state.email}
+                    error={errors.email}
+                    onChange={this.onChange}
+                  />
                   <TextInputGroup
                     type="password"
                     name="password"
                     placeholder="Password"
-                    onChange={this.onChange}
-                    error={errors.password}
                     value={this.state.password}
+                    error={errors.password}
+                    onChange={this.onChange}
                   />
-
                   <TextInputGroup
-                    placeholder="Confirm Password"
                     type="password"
                     name="password2"
-                    onChange={this.onChange}
-                    error={errors.password2}
+                    placeholder="Confirm Your Password"
                     value={this.state.password2}
+                    error={errors.password2}
+                    onChange={this.onChange}
                   />
-
+                  <TextInputGroup
+                    type="date"
+                    name="date"
+                    placeholder="Birthday"
+                    value={this.state.birthday}
+                    error={errors.birthday}
+                    onChange={this.onChange}
+                  />
                   <input
-                    value="Submit"
+                    className="btn btn-register mt-4 btn-block btn-primary"
                     type="submit"
-                    className="btn mt-4 btn-block btn-primary"
+                    value="Sign Up"
                   />
                 </form>
               </div>

@@ -3,8 +3,8 @@
 .navbar-brand,
 ul.navbar-nav > li.nav-item > a {
   font-family: Ubuntu, sans-serif;
-  font-size: 24px;
   cursor: pointer;
+  float: right !important;
 }
 
 ul.navbar-nav > li.nav-item > a {
@@ -13,12 +13,6 @@ ul.navbar-nav > li.nav-item > a {
 
 .navbar-brand {
   padding-left: 10px;
-}
-
-/* Targeting all a tags in navbar */
-.navbar > .container > a,
-#navbarMain > ul > li > a {
-  color: white !important;
 }
 
 /* Targeting all a tags in navbar */

@@ -6,7 +6,6 @@ import jwt_decode from "jwt-decode";
 
 //Components
 import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
 import Register from "./components/users/Register";
 import Login from "./components/users/Login";
 import Landing from "./components/layout/Landing";
@@ -14,23 +13,17 @@ import Projects from "./components/projects/Projects";
 import AddProject from "./components/projects/AddProject";
 import EditProject from "./components/projects/EditProject";
 import PrivateRoute from "./components/common/PrivateRoute";
+import AddProfile from "./components/profiles/AddProfile";
+import Profile from "./components/profiles/Profile";
+import Profiles from "./components/profiles/Profiles";
 
 //Actions and reducers
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import setAuthToken from "./components/utils/setAuthToken";
 
-//Styles
-import "./css/Footer.css";
-import "./css/Dashboard.css";
-import "./css/Landing.css";
-import "./css/Login.css";
-import "./css/Navbar.css";
-import "./css/Profile.css";
-import "./css/Register.css";
-
 if (localStorage.jwtToken) {
   // If the token exist
-  // Grabbing the local storage from the header, undeconding it to have access to the expiration and setting the current user
+  // Grabbing the local storage from the header, decoding it to have access to the expiration and setting the current user
 
   setAuthToken(localStorage.jwtToken);
 
@@ -61,9 +54,18 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>
-                <PrivateRoute exact path="/dashboard" component={Projects} />
-              </Switch>
-              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/profiles/create"
+                  component={AddProfile}
+                />
+                <PrivateRoute exact path="/profiles" component={Profiles} />
+                <PrivateRoute
+                  exact
+                  path="/profile/:handle"
+                  component={Profile}
+                />
+                <PrivateRoute exact path="/projects" component={Projects} />
                 <PrivateRoute
                   exact
                   path="/projects/add"
@@ -76,7 +78,6 @@ class App extends Component {
                 />
               </Switch>
             </div>
-            <Footer />
           </div>
         </Router>
       </Provider>

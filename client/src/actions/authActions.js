@@ -57,7 +57,7 @@ export const loginUser = (userData, history) => async dispatch => {
 
     dispatch(setCurrentUser(decoded));
 
-    history.push("/dashboard");
+    history.push("/projects");
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

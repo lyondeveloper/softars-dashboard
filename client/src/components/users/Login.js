@@ -5,6 +5,8 @@ import TextInputGroup from "../common/TextInputGroup";
 import { loginUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 
+import "../../css/Login.css";
+
 class Login extends Component {
   constructor() {
     super();
@@ -48,46 +50,48 @@ class Login extends Component {
   }
 
   render() {
-    const { errors, email, password } = this.state;
+    const { errors } = this.state;
     return (
       <div className="login">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h4 className="text-primary">
-                <Link to="/register">
-                  <i className="fas fa-arrow-circle-left" /> Back to Register
-                </Link>
-              </h4>
-              <div className="form-group">
-                <h1 className="display-4 text-center">Log In</h1>
-                <h3 className="lead text-center text-primary mt-4 mb-3">
-                  Log in using your SoftArs account information...
-                </h3>
+              <div className="form-group form-group-login">
+                <h4 className="text-primary">
+                  <Link to="/register">
+                    <i className="fas fa-arrow-circle-left" /> Back to Register
+                  </Link>
+                </h4>
+                <h1 className="display-4 text-center">Sign In</h1>
+                <h4 className="lead text-center">Use your SoftArs account</h4>
                 <form onSubmit={this.onSubmit}>
                   <TextInputGroup
-                    type="email"
                     name="email"
-                    value={email}
                     placeholder="Email"
+                    value={this.state.email}
                     onChange={this.onChange}
                     error={errors.email}
                   />
-
                   <TextInputGroup
                     type="password"
                     name="password"
-                    value={password}
                     placeholder="Password"
+                    value={this.state.password}
                     onChange={this.onChange}
                     error={errors.password}
                   />
-
                   <input
-                    value="Submit"
-                    className="btn btn-info btn-block mt-4"
+                    className="btn btn-login mt-4 btn-block btn-primary"
                     type="submit"
+                    value="Log In"
                   />
+                  <h4 className="lead text-center mt-5">
+                    Using your social medias <br />
+                    <br />
+                    <i className="fab fa-twitter social-icon social-icon-login" />
+                    <i className="fab fa-facebook social-icon social-icon-login" />
+                    <i className="fab fa-google social-icon social-icon-login" />
+                  </h4>
                 </form>
               </div>
             </div>

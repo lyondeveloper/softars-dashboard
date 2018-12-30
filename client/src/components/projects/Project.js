@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Moment from "react-moment";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
 import { getProject, deleteProject } from "../../actions/projectActions";
 
 class Project extends Component {
+  componentDidMount() {}
+
   onDeleteClick(id) {
     if (window.confirm("Are you sure? This action can NOT be undone")) {
       this.props.deleteProject(id);
@@ -14,47 +16,41 @@ class Project extends Component {
 
   render() {
     const { project } = this.props;
-    const { _id } = this.props.project;
-
+    console.log(project);
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="card bg-blue">
-              <i
-                className="fas fa-times"
-                style={{ cursor: "pointer", float: "right", color: "red" }}
-                onClick={this.onDeleteClick.bind(this, _id)}
-              />
-              <Link to={`/projects/edit/${_id}`}>
-                <i
-                  className="fas fa-pencil-alt"
-                  style={{ cursor: "pointer", float: "right", color: "green" }}
-                />
-              </Link>
-              <div className="card-body mt-4">
-                <h5 className="card-title text-primary"> {project.title} </h5>
-                <div className="card-text"> {project.description} </div>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item"> {project.type} </li>
-                  <li className="list-group-item"> {project.url}</li>
-                  <li className="list-group-item"> {project.client}</li>
-                  <li className="list-group-item">
-                    <Moment format="YYYY/MM/DD">{project.date}</Moment>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <tbody>
+        <tr>
+          <th>{project.title}</th>
+          <th>{project.description}</th>
+          <th>
+            <Moment format="YYYY/MM/DD" value={project.date} />
+          </th>
+
+          <th> {project.client} </th>
+          <th> {project.type} </th>
+          <th>
+            <a href={project.url} target="_blank" rel="noopener noreferrer">
+              <span className="link-text">Click here to visit</span>
+            </a>
+          </th>
+        </tr>
+        <tr>
+          <Link to={`/projects/edit/${project._id}`}>
+            <i className="fas fa-pencil-alt mr-3 text-warning" />
+          </Link>
+          <i
+            className="fas fa-trash-alt"
+            onClick={this.onDeleteClick.bind(this, project._id)}
+          />
+        </tr>
+      </tbody>
     );
   }
 }
 
 Project.propTypes = {
   getProject: PropTypes.func.isRequired,
-  projects: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired
 };
 
 export default connect(
