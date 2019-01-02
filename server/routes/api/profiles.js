@@ -7,7 +7,7 @@ const ProfileController = require("../../controllers/ProfileController");
 //@desc Create profile if you don't have one, edit it if you do
 //@access Private
 router.post(
-  "/create",
+  "/createOrEdit",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     ProfileController.createOrEdit(req, res);

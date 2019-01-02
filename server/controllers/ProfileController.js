@@ -21,7 +21,7 @@ class ProfileController {
       if (req.body.bio) profileFields.bio = req.body.bio;
       if (req.body.country) profileFields.country = req.body.country;
 
-      //Checking if profession has an "," => if this true, then we will split the string into an array with the indexOf˚
+      //Checking if profession has an "," => if this true, then we will split the string into an array with the indexOf
       if (typeof req.body.profession !== "undefined") {
         profileFields.profession = req.body.profession.split(", ");
       }
@@ -41,12 +41,14 @@ class ProfileController {
           profileUpdated
         });
       } else {
+        //Checking if the handle has already been taken, if true, then it will throw an error
         const handle = await Profile.findOne({ handle: profileFields.handle });
 
         if (handle) {
           errors.handle = "This handle already exist";
           return res.status(400).json(errors);
         } else {
+          //Saving the new profile in MongoDB
           const newProfile = await new Profile(profileFields).save();
 
           res.json({
@@ -105,7 +107,6 @@ class ProfileController {
   async delete(req, res) {
     try {
       //Deleting profile and user from database
-
       const profileDeleted = await Profile.findOneAndRemove({
         user: req.user.id
       });

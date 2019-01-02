@@ -6,8 +6,6 @@ import Moment from "react-moment";
 import { getProject, deleteProject } from "../../actions/projectActions";
 
 class Project extends Component {
-  componentDidMount() {}
-
   onDeleteClick(id) {
     if (window.confirm("Are you sure? This action can NOT be undone")) {
       this.props.deleteProject(id);
@@ -16,7 +14,6 @@ class Project extends Component {
 
   render() {
     const { project } = this.props;
-    console.log(project);
     return (
       <tbody>
         <tr>

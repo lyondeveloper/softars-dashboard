@@ -25,6 +25,7 @@ class UserController {
         errors.email = "Email already exist";
         return res.status(400).json(errors);
       } else {
+        //Creating the new user and saving it
         const user = new User({
           name: req.body.name,
           email: req.body.email,
@@ -33,6 +34,7 @@ class UserController {
         });
 
         const newUser = await user.save();
+
         res.json({
           success: true,
           newUser
@@ -78,6 +80,7 @@ class UserController {
 
         res.json({ token: "Bearer " + token });
       } else {
+        //In case didMatch is false, throwing an 404 status with the error
         errors.password = "Password incorrect";
         return res.status(404).json(errors);
       }
@@ -86,6 +89,7 @@ class UserController {
     }
   }
 
+  //Method to get the current user
   getCurrentUser(req, res) {
     res.json({
       id: req.user.id,

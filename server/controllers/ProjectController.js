@@ -16,7 +16,6 @@ class ProjectController {
       if (!isValid) return res.status(400).json(errors);
 
       //Creating the new user data and saving it to database, in case of errors, they will be pushed to the errors object to be handle in front-end
-
       const projectFields = {};
 
       projectFields.user = req.user.id;
@@ -53,11 +52,13 @@ class ProjectController {
   async getById(req, res) {
     const errors = {};
     try {
+      //Grabbing the project's id from params and finding it
       const id = req.params.id;
       const project = await Project.findById(id);
 
       res.json(project);
     } catch (e) {
+      //If errors, then status 404
       errors.notFound = "Project not found";
       return res.status(404).json(errors);
     }
@@ -73,6 +74,7 @@ class ProjectController {
 
       if (!isValid) return res.status(400).json(errors);
 
+      //Creating the project fields
       const projectFields = {};
 
       if (req.body.title) projectFields.title = req.body.title;
@@ -83,6 +85,7 @@ class ProjectController {
       if (req.body.type) projectFields.type = req.body.type;
       if (req.body.date) projectFields.date = req.body.date;
 
+      //Finding the project by its id and updating the information in MongoDB
       const projectUpdated = await Project.findByIdAndUpdate(
         req.params.id,
         {
@@ -101,6 +104,7 @@ class ProjectController {
 
   //Method to delete projects
   async delete(req, res) {
+    //Grabbing the id from the params and deleting project
     const { id } = req.params;
 
     try {

@@ -25,7 +25,7 @@ class AddProject extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps) {
+    if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
   }

@@ -2,27 +2,27 @@
   margin-top: 30px;
 }
 
-.card > .text-center > h4,
-.card > .text-center > h4 {
+.profile .card > .text-center > h4,
+.profile .card > .text-center > h4 {
   font-size: 24px;
 }
 
-.info {
+.profile .info {
   margin-top: 60px;
 }
 
-img {
+.profile img {
   margin: 0 auto;
 }
 
-.bio {
+.profile .bio {
   margin-top: 90px;
 }
 
-.container-buttons {
+.profile .container-buttons {
   margin-top: 10px;
 }
 
-.btn {
+.profile .btn {
   margin-right: 15px;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { logoutUser, deleteUser } from "../../actions/authActions";
+import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
 
 import "../../css/Navbar.css";
@@ -19,16 +19,6 @@ class Navbar extends Component {
 
     this.props.logoutUser();
   }
-
-  // onDeleteAccountClick(e) {
-  //   e.preventDefault();
-
-  //   this.props.deleteUser();
-
-  //   if (localStorage.jwtToken) {
-  //     localStorage.removeItem("jwtToken");
-  //   }
-  // }
 
   render() {
     const { isAuthenticated } = this.props.auth;
@@ -159,8 +149,7 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  deleteUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -169,5 +158,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, deleteUser }
+  { logoutUser }
 )(Navbar);

@@ -9,6 +9,7 @@ import Navbar from "./components/layout/Navbar";
 import Register from "./components/users/Register";
 import Login from "./components/users/Login";
 import Landing from "./components/layout/Landing";
+import Dashboard from "./components/dashboard/Dashboard";
 import Projects from "./components/projects/Projects";
 import AddProject from "./components/projects/AddProject";
 import EditProject from "./components/projects/EditProject";
@@ -51,6 +52,7 @@ class App extends Component {
             <Navbar />
             <Route exact path="/" component={Landing} />
             <div className="container">
+              <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>
