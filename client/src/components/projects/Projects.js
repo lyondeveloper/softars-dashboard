@@ -15,6 +15,9 @@ class Projects extends Component {
 
   render() {
     const { projects, loading } = this.props.projects;
+
+    console.log(projects);
+
     let projectContent;
 
     //Checking if projects is null or loading is true to put Spinner

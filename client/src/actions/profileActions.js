@@ -21,7 +21,7 @@ export const createOrEditProfile = (profileData, history) => async dispatch => {
   try {
     await axios.post("/api/profiles/createOrEdit", profileData);
 
-    history.push(`/profile/${profileData.handle}`);
+    history.push(`/dashboard`);
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, GET_ERRORS} from "./types";
+import { SET_CURRENT_USER, GET_ERRORS } from "./types";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../components/utils/setAuthToken";
@@ -44,7 +44,7 @@ export const loginUser = (userData, history) => async dispatch => {
 
     dispatch(setCurrentUser(decoded));
 
-    history.push("/projects");
+    history.push("/dashboard");
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

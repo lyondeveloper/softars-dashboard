@@ -14,13 +14,14 @@ class Project extends Component {
 
   render() {
     const { project } = this.props;
+
     return (
       <tbody>
         <tr>
           <th>{project.title}</th>
           <th>{project.description}</th>
           <th>
-            <Moment format="YYYY/MM/DD" value={project.date} />
+            <Moment format="YYYY/MM/DD" date={project.date} />
           </th>
 
           <th> {project.client} </th>
