@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Spinner from "../layout/Spinner";
+import { Link } from "react-router-dom";
 import {
   getProfileByHandle,
   deleteAccount
@@ -12,15 +13,19 @@ import "../../css/Profile.css";
 
 class Profile extends Component {
   componentDidMount() {
-    if (this.props.match.params.handle) {
-      this.props.getProfileByHandle(this.props.match.params.handle);
-    }
+    this.props.getProfileByHandle(this.props.match.params.handle);
   }
 
-  onDeleteClick(e) {
+  onDeleteProfileClick(e) {
     e.preventDefault();
 
-    this.props.deleteAccount();
+    if (
+      window.confirm(
+        "You are about to delete your ENTIRE account ¿Are you sure you want to do this? This action can NOT be undone"
+      )
+    ) {
+      this.props.deleteAccount();
+    }
 
     if (localStorage.jwtToken) {
       localStorage.removeItem("jwtToken");
@@ -30,13 +35,18 @@ class Profile extends Component {
   render() {
     const { profile, loading } = this.props.profiles;
 
-    console.log(profile);
+    const firstName = profile.user.name.trim().split(" ")[0];
 
-    // const firstName = profile.user.name.trim.split(" ")[0];
+    const professions = profile.profession.map((profession, index) => (
+      <div key={index} className="p-3 d-inline-block">
+        <i className="fas fa-check mr-3" />
+        {profession}
+      </div>
+    ));
 
     let profileContent;
 
-    if (profile === null || loading) {
+    if (loading) {
       profileContent = <Spinner />;
     } else {
       profileContent = (
@@ -59,11 +69,13 @@ class Profile extends Component {
                         <h1> {profile.user.name} </h1>
                         <div className="container container-buttons">
                           <button className="btn btn-warning">
-                            Edit Account
+                            <Link to={`/profile/edit/${profile.handle}`}>
+                              Edit Account
+                            </Link>
                           </button>
                           <button
                             className="btn btn-danger"
-                            onClick={this.onDeleteClick.bind(this)}
+                            onClick={this.onDeleteProfileClick.bind(this)}
                           >
                             Delete Account
                           </button>
@@ -79,7 +91,7 @@ class Profile extends Component {
                     </div>
                     <div className="col-md-6">
                       <div className="bio">
-                        {/* <h3 className="text-center">{firstName}'s Bio</h3> */}
+                        <h3 className="text-center">{firstName}'s Bio</h3>
                         <p className="lead mt-3 text-justify">{profile.bio}</p>
                       </div>
                     </div>
@@ -96,10 +108,8 @@ class Profile extends Component {
                     </div>
                     <div className="col-md-4">
                       <h3 className="text-center">
-                        Profession
-                        <p className="lead mt-4 text-center">
-                          {profile.profession}
-                        </p>
+                        Professions
+                        <p className="lead mt-4 text-center">{professions}</p>
                       </h3>
                     </div>
                     <div className="col-md-4">

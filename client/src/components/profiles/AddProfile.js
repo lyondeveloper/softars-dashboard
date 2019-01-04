@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import TextInputGroup from "../common/TextInputGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import { addProfile } from "../../actions/profileActions";
+import { createOrEditProfile } from "../../actions/profileActions";
 import { connect } from "react-redux";
 
 import "../../css/AddProfile.css";
 
 class AddProfile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       handle: "",
@@ -23,12 +24,6 @@ class AddProfile extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
   }
 
   onSubmit(e) {
@@ -45,18 +40,20 @@ class AddProfile extends Component {
     };
 
     //Using the action to create a profile, then redirecting to the profile
-    this.props.addProfile(newProfile);
-
-    this.props.history.push(`/profile/${newProfile.handle}`);
+    this.props.createOrEditProfile(newProfile, this.props.history);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  render() {
-    const { errors } = this.state;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
 
+  render() {
     const options = [
       {
         label: "Select your current occupation",
@@ -71,6 +68,8 @@ class AddProfile extends Component {
         value: "Social Media"
       }
     ];
+
+    const { errors } = this.state;
 
     return (
       <div className="add-profile">
@@ -146,8 +145,9 @@ class AddProfile extends Component {
 
 //Setting up the prop types to make them required
 AddProfile.propTypes = {
-  addProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  createOrEditProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 //Mapping the state to props to access them globally with this.props
@@ -158,5 +158,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addProfile }
-)(AddProfile);
+  { createOrEditProfile }
+)(withRouter(AddProfile));

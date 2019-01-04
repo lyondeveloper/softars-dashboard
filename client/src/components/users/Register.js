@@ -16,7 +16,6 @@ class Register extends Component {
       email: "",
       password: "",
       password2: "",
-      birthday: "",
       errors: {}
     };
 
@@ -101,14 +100,7 @@ class Register extends Component {
                     error={errors.password2}
                     onChange={this.onChange}
                   />
-                  <TextInputGroup
-                    type="date"
-                    name="date"
-                    placeholder="Birthday"
-                    value={this.state.birthday}
-                    error={errors.birthday}
-                    onChange={this.onChange}
-                  />
+
                   <input
                     className="btn btn-register mt-4 btn-block btn-primary"
                     type="submit"

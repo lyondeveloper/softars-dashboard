@@ -5,7 +5,8 @@ import {
   GET_PROFILES,
   LOADING,
   SET_CURRENT_USER,
-  GET_ERRORS
+  GET_ERRORS,
+  CLEAR_CURRENT_PROFILE
 } from "./types";
 
 //Set Loading
@@ -16,13 +17,33 @@ export const loadingProfile = () => {
 };
 
 //Add profile
-export const addProfile = profileData => async dispatch => {
+export const createOrEditProfile = (profileData, history) => async dispatch => {
   try {
     await axios.post("/api/profiles/createOrEdit", profileData);
+
+    history.push(`/profile/${profileData.handle}`);
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data
+    });
+  }
+};
+
+export const getCurrentProfile = () => async dispatch => {
+  try {
+    dispatch(loadingProfile());
+
+    const res = await axios.get("/api/profiles/current");
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_PROFILE,
+      payload: {}
     });
   }
 };
@@ -40,8 +61,8 @@ export const getProfileByHandle = handle => async dispatch => {
     });
   } catch (err) {
     dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
+      type: GET_PROFILE,
+      payload: {}
     });
   }
 };
@@ -59,10 +80,16 @@ export const getProfiles = () => async dispatch => {
     });
   } catch (err) {
     dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
+      type: GET_PROFILES,
+      payload: {}
     });
   }
+};
+
+export const clearCurrentProfile = () => {
+  return {
+    type: CLEAR_CURRENT_PROFILE
+  };
 };
 
 //Delete Account

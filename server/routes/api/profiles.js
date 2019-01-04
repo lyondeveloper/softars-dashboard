@@ -14,6 +14,17 @@ router.post(
   }
 );
 
+//@route GET /api/profiles/current
+//@desc Get all profiles
+//@access Public
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ProfileController.getCurrentProfile(req, res);
+  }
+);
+
 //@route GET /api/profiles
 //@desc Get all profiles
 //@access Public

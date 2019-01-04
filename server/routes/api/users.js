@@ -4,7 +4,6 @@ const router = express.Router();
 const passport = require("passport");
 const UserController = require("../../controllers/UserController");
 
-
 //@route POST /api/users/register
 //@desc Create user
 //@access Public
@@ -37,11 +36,11 @@ router.get("/", (req, res) => {
   UserController.getAll(req, res);
 });
 
-//@route PUT /api/users/update
+//@route PUT /api/users/update/:id
 //@desc Update user
 //@access Private
 router.put(
-  "/update/:id",
+  "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     UserController.update(req, res);

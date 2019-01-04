@@ -29,8 +29,7 @@ class UserController {
         const user = new User({
           name: req.body.name,
           email: req.body.email,
-          password: bcrypt.hashSync(req.body.password, 10),
-          date: req.body.date
+          password: bcrypt.hashSync(req.body.password, 10)
         });
 
         const newUser = await user.save();
@@ -41,17 +40,17 @@ class UserController {
         });
       }
     } catch (err) {
-      return res.status(500).json(err);
+      console.log(err);
     }
   }
 
   async login(req, res) {
-    //Check input fields
-    const { errors, isValid } = InputValidation.validateLoginInput(req.body);
-
-    if (!isValid) return res.status(400).json(errors);
-
     try {
+      //Check input fields
+      const { errors, isValid } = InputValidation.validateLoginInput(req.body);
+
+      if (!isValid) return res.status(400).json(errors);
+
       //Finding User
       const user = await User.findOne({ email: req.body.email });
 
@@ -94,37 +93,8 @@ class UserController {
     res.json({
       id: req.user.id,
       name: req.user.name,
-      date: req.user.date,
       password: req.user.password
     });
-  }
-
-  async update(req, res) {
-    try {
-      //Grabbing the id from the params
-      const id = req.params.id;
-      const { errors, isValid } = InputValidation.validateRegisterInput(
-        req.body
-      );
-
-      if (!isValid) return res.status(400).json(errors);
-
-      //The new body to update the user's info
-      let newData = _.pick(req.body, ["name", "email", "date"]);
-
-      //Finding the user to update
-      const user = await User.findByIdAndUpdate(id, newData, { new: true });
-
-      //Checking if the user exist
-      if (!user) {
-        errors.userNotFound = "User could not be found";
-        return res.status(404).json(errors);
-      }
-
-      res.json(user);
-    } catch (e) {
-      return res.status(500).json(e);
-    }
   }
 }
 

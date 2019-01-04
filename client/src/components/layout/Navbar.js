@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../../actions/authActions";
 import { connect } from "react-redux";
-
 import "../../css/Navbar.css";
 import logo from "../../img/logo-softars.b4151b4c.svg";
+import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.onLogoutClick = this.onLogoutClick.bind(this);
   }
@@ -18,6 +18,7 @@ class Navbar extends Component {
     e.preventDefault();
 
     this.props.logoutUser();
+    this.props.clearCurrentProfile();
   }
 
   render() {
@@ -126,14 +127,8 @@ class Navbar extends Component {
                   Account
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to={`/profile/`}>
-                    View Account
-                  </Link>
                   <div className="dropdown-divider" />
-                  <button
-                    className="dropdown-item"
-                    onClick={this.onLogoutClick}
-                  >
+                  <button class="dropdown-item" onClick={this.onLogoutClick}>
                     Log Out
                   </button>
                 </div>
@@ -149,14 +144,16 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  clearCurrentProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  profiles: state.profiles,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);

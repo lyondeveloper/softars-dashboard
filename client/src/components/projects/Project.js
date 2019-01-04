@@ -6,7 +6,7 @@ import Moment from "react-moment";
 import { getProject, deleteProject } from "../../actions/projectActions";
 
 class Project extends Component {
-  onDeleteClick(id) {
+  onDeleteProjectClick(id) {
     if (window.confirm("Are you sure? This action can NOT be undone")) {
       this.props.deleteProject(id);
     }
@@ -37,7 +37,7 @@ class Project extends Component {
           </Link>
           <i
             className="fas fa-trash-alt"
-            onClick={this.onDeleteClick.bind(this, project._id)}
+            onClick={this.onDeleteProjectClick.bind(this, project._id)}
           />
         </tr>
       </tbody>

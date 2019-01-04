@@ -15,6 +15,7 @@ import AddProject from "./components/projects/AddProject";
 import EditProject from "./components/projects/EditProject";
 import PrivateRoute from "./components/common/PrivateRoute";
 import AddProfile from "./components/profiles/AddProfile";
+import EditProfile from "./components/profiles/EditProfile";
 import Profile from "./components/profiles/Profile";
 import Profiles from "./components/profiles/Profiles";
 
@@ -52,14 +53,19 @@ class App extends Component {
             <Navbar />
             <Route exact path="/" component={Landing} />
             <div className="container">
-              <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Switch>
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute
                   exact
                   path="/profiles/create"
                   component={AddProfile}
+                />
+                <PrivateRoute
+                  exact
+                  path="/profile/edit/:handle"
+                  component={EditProfile}
                 />
                 <PrivateRoute exact path="/profiles" component={Profiles} />
                 <PrivateRoute

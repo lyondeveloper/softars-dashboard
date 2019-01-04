@@ -6,6 +6,10 @@
   width: 80%;
 }
 
+.add-profile form {
+  margin-bottom: 50px;
+}
+
 .add-profile .form-group > h1 {
   color: #007bff;
   font-size: 42px;

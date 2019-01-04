@@ -83,6 +83,25 @@ class ProfileController {
     }
   }
 
+  async getCurrentProfile(req, res) {
+    try {
+      const errors = {};
+
+      const currentProfile = await Profile.findOne({
+        user: req.user.id
+      }).populate("user", "name");
+
+      if (!currentProfile) {
+        errors.notFound = "Profile not found, ¿Are you sure you are logged in?";
+        return res.status(404).json(errors);
+      }
+
+      res.json(currentProfile);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async getByHandle(req, res) {
     try {
       const errors = {};
@@ -90,7 +109,12 @@ class ProfileController {
       //Grabbing the handle from the params
       const { handle } = req.params;
 
-      const profileByHandle = await Profile.findOne({ handle });
+      const profileByHandle = await Profile.findOne({ handle }).populate(
+        "user",
+        "name"
+      );
+
+      console.log(profileByHandle);
 
       //Checking if handle is invalid, if true then return 404 status with the errors object
       if (!profileByHandle) {
