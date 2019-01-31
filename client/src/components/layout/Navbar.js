@@ -128,7 +128,7 @@ class Navbar extends Component {
                 </a>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <div className="dropdown-divider" />
-                  <button class="dropdown-item" onClick={this.onLogoutClick}>
+                  <button className="dropdown-item" onClick={this.onLogoutClick}>
                     Log Out
                   </button>
                 </div>

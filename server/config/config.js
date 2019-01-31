@@ -1,13 +1,5 @@
 /**
  *****************
- * Enviroment Configuration
- ******************
- */
-
-process.env.NODE_ENV = process.env.NODE_ENV || "dev";
-
-/**
- *****************
  * Port Configuration
  ******************
  */
@@ -19,14 +11,13 @@ process.env.PORT = process.env.PORT || 5000;
  ******************
  */
 
-// if (process.env.NODE_ENV === "production") {
-//     process.env.MONGOURI =
-//         "mongodb://dashboard:7f3ecef1ef3aea7d7f9bdf852569ea49@dokku-mongo-dashboard:27017/dashboard";
-// } else if (process.env.NODE_ENV === "dev") {
-//     process.env.MONGOURI = "mongodb://localhost:27017/softars-dashboard";
-// }
-process.env.MONGOURI =
-    "mongodb://dashboard:7f3ecef1ef3aea7d7f9bdf852569ea49@dokku-mongo-dashboard:27017/dashboard";
+if (process.env.NODE_ENV === "production") {
+    process.env.MONGOURI =
+        "mongodb://dashboard:7f3ecef1ef3aea7d7f9bdf852569ea49@dokku-mongo-dashboard:27017/dashboard";
+} else {
+    process.env.MONGOURI = "mongodb://localhost:27017/softars-dashboard";
+}
+
 // process.env.MONGOURI =
 //     "mongodb://jjrincon:Jr946864@ds147233.mlab.com:47233/sadashboard";
 
