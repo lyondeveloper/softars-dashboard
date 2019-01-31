@@ -114,8 +114,6 @@ class ProfileController {
         "name"
       );
 
-      console.log(profileByHandle);
-
       //Checking if handle is invalid, if true then return 404 status with the errors object
       if (!profileByHandle) {
         errors.notFound = "This profile doesn't exist";

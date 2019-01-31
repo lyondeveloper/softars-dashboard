@@ -146,8 +146,8 @@ class InputValidation {
     if (!Validator.isLength(data.handle, { min: 2 })) {
       errors.handle = "Handle field must be at least 2 characters";
     }
-    if (!Validator.isLength(data.bio, { min: 10, max: 50 })) {
-      errors.bio = "Bio field must be between 10 and 50 characters";
+    if (!Validator.isLength(data.bio, { min: 10, max: 250 })) {
+      errors.bio = "Bio field must be between 10 and 250 characters";
     }
 
     if (!Validator.isURL(data.website)) {
