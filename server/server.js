@@ -14,6 +14,7 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const projects = require("./routes/api/projects");
 const profiles = require("./routes/api/profiles");
+const all = require("./routes/all");
 
 //middlewares
 const publicPath = path.resolve(__dirname, "../public");
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use("/api/users", users);
 app.use("/api/projects", projects);
 app.use("/api/profiles", profiles);
+app.use("/", all);
 
 //Passport configuration
 app.use(passport.initialize());
