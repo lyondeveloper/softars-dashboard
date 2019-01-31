@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const path = require("path");
 
 //@route GET /api/users/current
 //@desc Get current user
@@ -9,7 +10,7 @@ const passport = require("passport");
 router.get(
   "*",
     (req, res, next) => {
-        //You can handle the request here
+        res.sendFile(path.join(__dirname+'/public/index.html')));
     }
 );
 
