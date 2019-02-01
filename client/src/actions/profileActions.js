@@ -55,8 +55,6 @@ export const getProfileByHandle = handle => async dispatch => {
 
         const res = await axios.get(`/api/profiles/${handle}`);
 
-        console.log(res);
-
         dispatch({
             type: GET_PROFILE,
             payload: res.data

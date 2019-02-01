@@ -14,17 +14,6 @@ import "../../css/Profile.css";
 class Profile extends Component {
     async componentWillMount() {
         await this.props.getProfileByHandle(this.props.match.params.handle);
-
-        const { profile } = this.props.profiles;
-
-        profile.firstName = profile.user.name.trim().split(" ")[0];
-
-        profile.professions = profile.profession.map((profession, index) => (
-            <div key={index} className="p-3 d-inline-block">
-                <i className="fas fa-check mr-3" />
-                {profession}
-            </div>
-        ));
     }
 
     onDeleteProfileClick(e) {
@@ -51,6 +40,17 @@ class Profile extends Component {
         if (loading || !profile.user) {
             profileContent = <Spinner />;
         } else {
+            profile.professions = profile.profession.map(
+                (profession, index) => (
+                    <div key={index} className="p-3 d-inline-block">
+                        <i className="fas fa-check mr-3" />
+                        {profession}
+                    </div>
+                )
+            );
+
+            const firstName = profile.user.name.trim().split(" ")[0];
+
             profileContent = (
                 <div className="profile">
                     <div className="container">
@@ -101,8 +101,7 @@ class Profile extends Component {
                                         <div className="col-md-6">
                                             <div className="bio">
                                                 <h3 className="text-center">
-                                                    {profile.user.firstName}'s
-                                                    Bio
+                                                    {firstName} Bio
                                                 </h3>
                                                 <p className="lead mt-3 text-justify">
                                                     {profile.bio}
@@ -123,9 +122,9 @@ class Profile extends Component {
                                         <div className="col-md-4">
                                             <h3 className="text-center">
                                                 Professions
-                                                <p className="lead mt-4 text-center">
+                                                <span className="lead mt-4 text-center">
                                                     {profile.professions}
-                                                </p>
+                                                </span>
                                             </h3>
                                         </div>
                                         <div className="col-md-4">
