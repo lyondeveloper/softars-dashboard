@@ -17,8 +17,6 @@ class Profile extends Component {
 
         const { profile } = this.props.profiles;
 
-        debugger;
-
         profile.firstName = profile.user.name.trim().split(" ")[0];
 
         profile.professions = profile.profession.map((profession, index) => (
@@ -50,7 +48,7 @@ class Profile extends Component {
 
         let profileContent;
 
-        if (loading) {
+        if (loading || !profile.user) {
             profileContent = <Spinner />;
         } else {
             profileContent = (
@@ -154,7 +152,7 @@ class Profile extends Component {
 Profile.propTypes = {
     getProfileByHandle: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired
+    profiles: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
