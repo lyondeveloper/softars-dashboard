@@ -3,7 +3,7 @@ import axios from "axios";
 import {
     GET_PROFILE,
     GET_PROFILES,
-    LOADING,
+    PROFILE_LOADING,
     SET_CURRENT_USER,
     GET_ERRORS,
     CLEAR_CURRENT_PROFILE
@@ -12,7 +12,7 @@ import {
 //Set Loading
 export const loadingProfile = () => {
     return {
-        type: LOADING
+        type: PROFILE_LOADING
     };
 };
 
@@ -21,7 +21,7 @@ export const createOrEditProfile = (profileData, history) => async dispatch => {
     try {
         await axios.post("/api/profiles/createOrEdit", profileData);
 
-        history.push(`/dashboard`);
+        history.push("/dashboard");
     } catch (err) {
         dispatch({
             type: GET_ERRORS,
