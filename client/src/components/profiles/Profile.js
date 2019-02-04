@@ -114,17 +114,32 @@ class Profile extends Component {
                                         <div className="col-md-4">
                                             <h3 className="text-center">
                                                 Website
-                                                <p className="lead mt-4 text-center">
+                                                <a
+                                                    href={`//${
+                                                        profile.website
+                                                    }`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="lead mt-4 text-center"
+                                                >
+                                                    <div className="mt-3 link-text">
+                                                        {" "}
+                                                        {profile.website}{" "}
+                                                    </div>
+                                                </a>
+                                                {/* <p className="lead mt-4 text-center">
                                                     {profile.website}
-                                                </p>
+                                                </p> */}
                                             </h3>
                                         </div>
                                         <div className="col-md-4">
                                             <h3 className="text-center">
                                                 Professions
-                                                <span className="lead mt-4 text-center">
-                                                    {profile.professions}
-                                                </span>
+                                                <div className="row">
+                                                    <div className="d-flex flex-wrap justify-content-center align-items-center">
+                                                        {profile.professions}
+                                                    </div>
+                                                </div>
                                             </h3>
                                         </div>
                                         <div className="col-md-4">

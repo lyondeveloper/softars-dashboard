@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TextInputGroup from "../common/TextInputGroup";
+import SelectListGroup from "../common/SelectListGroup";
 import { addProject } from "../../actions/projectActions";
 import { connect } from "react-redux";
 
@@ -51,6 +52,28 @@ class AddProject extends Component {
   }
 
   render() {
+    const typeOptions = [
+      {
+        label: "Select the application type",
+        value: 0
+      },
+      {
+        label: "Desktop App",
+        value: "Desktop App"
+      },
+      {
+        label: "Website",
+        value: "Website"
+      },
+      {
+        label: "Website App",
+        value: "Website App"
+      },
+      {
+        label: "Mobile App",
+        value: "Mobile App"
+      }
+    ];
     const { errors } = this.state;
     return (
       <div className="register">
@@ -89,10 +112,10 @@ class AddProject extends Component {
                     value={this.state.client}
                     error={errors.client}
                   />
-                  <TextInputGroup
-                    type="text"
+                  <SelectListGroup
                     name="type"
                     placeholder="Type"
+                    options={typeOptions}
                     onChange={this.onChange}
                     value={this.state.type}
                     error={errors.type}
