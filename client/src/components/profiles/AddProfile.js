@@ -84,8 +84,8 @@ class AddProfile extends Component {
                 <form onSubmit={this.onSubmit}>
                   <TextInputGroup
                     name="handle"
-                    placeholder="Handle"
-                    info="This handle must be unique"
+                    placeholder="Username"
+                    info="This username must be unique"
                     value={this.state.handle}
                     onChange={this.onChange}
                     error={errors.handle}
