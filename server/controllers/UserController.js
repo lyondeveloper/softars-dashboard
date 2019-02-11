@@ -1,11 +1,23 @@
-require("../config/config");
+require('../config/config');
 
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const sendGridTransporter = require('nodemailer-sendgrid-transport');
+
+const transporter = nodemailer.createTransport(
+    sendGridTransporter({
+        auth: {
+            api_key:
+                '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'
+        }
+    })
+);
 
 //Input validations
-const InputValidation = require("../validation/InputValidation");
+const InputValidation = require('../validation/InputValidation');
 
 class UserController {
     async register(req, res) {
@@ -17,12 +29,14 @@ class UserController {
 
             if (!isValid) return res.status(400).json(errors);
 
+            const errors = {};
+
             const user = await User.findOne({ email: req.body.email });
 
             //User already exist with that email
             if (user) {
                 //Create user
-                errors.email = "Email already exist";
+                errors.email = 'Email already exist';
                 return res.status(400).json(errors);
             } else {
                 //Creating the new user and saving it
@@ -40,7 +54,7 @@ class UserController {
                 });
             }
         } catch (err) {
-            console.log(err);
+            return res.status(500).json(err);
         }
     }
 
@@ -57,12 +71,12 @@ class UserController {
             const user = await User.findOne({ email: req.body.email });
 
             if (!user) {
-                errors.email = "Email incorrect";
+                errors.email = 'Email incorrect';
                 return res.status(404).json(errors);
             }
 
             //Comparing password
-            const didMatch = await bcrypt.compareSync(
+            const didMatch = bcrypt.compareSync(
                 req.body.password,
                 user.password
             );
@@ -75,18 +89,104 @@ class UserController {
                 };
 
                 //Creating the JWT
-                const token = await jwt.sign(payload, process.env.TOKEN_SEED, {
+                const token = jwt.sign(payload, process.env.TOKEN_SEED, {
                     expiresIn: process.env.TOKEN_EXPIRATION
                 });
 
-                res.json({ token: "Bearer " + token });
+                res.json({ token: 'Bearer ' + token });
             } else {
                 //In case didMatch is false, throwing an 404 status with the error
-                errors.password = "Password incorrect";
+                errors.password = 'Password incorrect';
                 return res.status(404).json(errors);
             }
         } catch (e) {
             return res.status(500).json(e);
+        }
+    }
+
+    async sendResetPasswordEmail(req, res) {
+        try {
+            const errors = {};
+
+            const email = req.body.email;
+
+            const buffer = await crypto.randomBytes(32);
+
+            if (!buffer) return res.status(500).json('Buffer Error');
+
+            const token = buffer.toString('hex');
+
+            const userDb = await User.findOne({ email });
+
+            if (!userDb) {
+                errors.user = 'User could not be found with that email';
+                return res.status(404).json(errors);
+            }
+
+            userDb.resetToken = token;
+            userDb.resetTokenExpiration = Date.now() + 36000;
+
+            const userSaved = await userDb.save();
+
+            if (!userSaved)
+                return res.status(500).json('Error saving the user');
+
+            let emailAddress;
+
+            if (process.env.NODE_ENV === 'production') {
+                emailAddress = `http://dashboard.apps.softars.com/reset-password/${token}`;
+            } else {
+                emailAddress = `http://localhost:3000/reset-password/${token}`;
+            }
+
+            transporter.sendMail({
+                to: email,
+                from: 'admin@softars.com',
+                subject: 'Password reset',
+                html: `
+                <p> You requested a password reset </p>
+                <p> Click this <a href="${emailAddress}"> Link </a> to set a new password. </p>
+                `
+            });
+
+            res.json({ token });
+        } catch (err) {
+            return res.status(500).json(err);
+        }
+    }
+
+    async resetPassword(req, res) {
+        try {
+            const errors = {};
+            const newPassword = req.body.newPassword;
+            const passwordToken = req.params.token;
+
+            const user = await User.findOne({
+                resetToken: passwordToken,
+                resetTokenExpiration: { $gt: Date.now() }
+            });
+
+            console.log(user);
+
+            if (!user) {
+                errors.user = 'The token has expired';
+                return res.status(404).json(errors);
+            }
+
+            const hashPassword = await bcrypt.hash(newPassword, 10);
+
+            user.password = hashPassword;
+            user.resetToken = undefined;
+            user.resetTokenExpiration = undefined;
+
+            const newUserData = await user.save();
+
+            res.json({
+                newUserData: true,
+                newUserData
+            });
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -97,7 +197,9 @@ class UserController {
             name: req.user.name,
             password: req.user.password,
             role: req.user.role,
-            date: req.user.date
+            date: req.user.date,
+            resetToken: req.user.resetToken,
+            resetTokenExpiration: req.user.resetTokenExpiration
         });
     }
 }

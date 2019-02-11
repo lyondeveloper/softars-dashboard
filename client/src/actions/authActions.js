@@ -1,64 +1,89 @@
-import { SET_CURRENT_USER, GET_ERRORS } from "./types";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import setAuthToken from "../components/utils/setAuthToken";
+import { SET_CURRENT_USER, GET_ERRORS } from './types';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../components/utils/setAuthToken';
 
 export const registerUser = (userData, history) => async dispatch => {
-  //Doing request to back-end to register user
+    //Doing request to back-end to register user
 
-  try {
-    await axios.post("/api/users/register", userData);
+    try {
+        await axios.post('/api/users/register', userData);
 
-    history.push("/login");
-  } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
-  }
+        history.push('/login');
+    } catch (err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
 };
 
 export const setCurrentUser = decoded => {
-  //Setting the current user that has logged in
+    //Setting the current user that has logged in
 
-  return {
-    type: SET_CURRENT_USER,
-    payload: decoded
-  };
+    return {
+        type: SET_CURRENT_USER,
+        payload: decoded
+    };
 };
 
 export const loginUser = (userData, history) => async dispatch => {
-  //Doing request to back-end to log in user
+    //Doing request to back-end to log in user
 
-  try {
-    const res = await axios.post("/api/users/login", userData);
+    try {
+        const res = await axios.post('/api/users/login', userData);
 
-    //Grabbing the token from the response and setting it up in the headers
-    const { token } = res.data;
-    localStorage.setItem("jwtToken", token);
+        //Grabbing the token from the response and setting it up in the headers
+        const { token } = res.data;
+        localStorage.setItem('jwtToken', token);
 
-    //Putting the token in the Authorization headers
-    setAuthToken(token);
+        //Putting the token in the Authorization headers
+        setAuthToken(token);
 
-    const decoded = jwt_decode(token);
+        const decoded = jwt_decode(token);
 
-    dispatch(setCurrentUser(decoded));
+        dispatch(setCurrentUser(decoded));
 
-    history.push("/dashboard");
-  } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
-  }
+        history.push('/dashboard');
+    } catch (err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const sendResetPasswordEmail = (userData, history) => async dispatch => {
+    try {
+        await axios.post('/api/users/reset-password/email', userData);
+        history.push('/email-sent');
+    } catch (err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
+};
+
+export const resetPassword = (token, password, history) => async dispatch => {
+    try {
+        await axios.post(`/api/users/reset-password/${token}`, password);
+
+        history.push('/login');
+    } catch (err) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    }
 };
 
 export const logoutUser = () => dispatch => {
-  //Removing the token when the function is called.
+    //Removing the token when the function is called.
 
-  localStorage.removeItem("jwtToken");
+    localStorage.removeItem('jwtToken');
 
-  setAuthToken(false);
+    setAuthToken(false);
 
-  dispatch(setCurrentUser({}));
+    dispatch(setCurrentUser({}));
 };

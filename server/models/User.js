@@ -1,10 +1,10 @@
-const Mongoose = require("mongoose");
+const Mongoose = require('mongoose');
 
 let Schema = Mongoose.Schema;
 
 let validRoles = {
-    values: ["admin", "user"],
-    message: "{VALUE} is not a valid role"
+    values: ['admin', 'user'],
+    message: '{VALUE} is not a valid role'
 };
 
 let UserSchema = new Schema({
@@ -25,9 +25,12 @@ let UserSchema = new Schema({
 
     role: {
         type: String,
-        default: "user",
+        default: 'user',
         enum: validRoles
     },
+
+    resetToken: String,
+    resetTokenExpiration: Date,
 
     date: {
         type: Date,
@@ -35,4 +38,4 @@ let UserSchema = new Schema({
     }
 });
 
-module.exports = User = Mongoose.model("user", UserSchema);
+module.exports = User = Mongoose.model('user', UserSchema);
