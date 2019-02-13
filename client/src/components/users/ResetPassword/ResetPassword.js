@@ -24,13 +24,13 @@ class ResetPassword extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const { password } = this.state;
+        const data = {
+            password: this.state.password
+        };
 
-        const { token } = this.props.match.params;
+        const { token, email } = this.props.match.params;
 
-        console.log(token);
-
-        this.props.resetPassword(token, password, this.props.history);
+        this.props.resetPassword(token, email, data, this.props.history);
     }
 
     componentWillReceiveProps(nextProps) {

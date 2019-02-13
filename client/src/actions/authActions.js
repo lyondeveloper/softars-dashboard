@@ -56,6 +56,7 @@ export const loginUser = (userData, history) => async dispatch => {
 export const sendResetPasswordEmail = (userData, history) => async dispatch => {
     try {
         await axios.post('/api/users/reset-password/email', userData);
+
         history.push('/email-sent');
     } catch (err) {
         dispatch({
@@ -65,9 +66,18 @@ export const sendResetPasswordEmail = (userData, history) => async dispatch => {
     }
 };
 
-export const resetPassword = (token, password, history) => async dispatch => {
+export const resetPassword = (
+    token,
+    email,
+    password,
+    history
+) => async dispatch => {
     try {
-        await axios.post(`/api/users/reset-password/${token}`, password);
+        console.log(password);
+        await axios.post(
+            `/api/users/reset-password/${token}/${email}`,
+            password
+        );
 
         history.push('/login');
     } catch (err) {

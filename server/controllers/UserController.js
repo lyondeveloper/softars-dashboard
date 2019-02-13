@@ -124,7 +124,7 @@ class UserController {
             }
 
             userDb.resetToken = token;
-            userDb.resetTokenExpiration = Date.now() + 36000;
+            userDb.resetTokenExpiration = Date.now() + 360000;
 
             const userSaved = await userDb.save();
 
@@ -134,9 +134,9 @@ class UserController {
             let emailAddress;
 
             if (process.env.NODE_ENV === 'production') {
-                emailAddress = `http://dashboard.apps.softars.com/reset-password/${token}`;
+                emailAddress = `http://dashboard.apps.softars.com/reset-password/${token}/${email}`;
             } else {
-                emailAddress = `http://localhost:3000/reset-password/${token}`;
+                emailAddress = `http://localhost:3000/reset-password/${token}/${email}`;
             }
 
             transporter.sendMail({
@@ -149,29 +149,37 @@ class UserController {
                 `
             });
 
-            res.json({ token });
+            res.json({ token, email });
         } catch (err) {
-            return res.status(500).json(err);
+            console.log(err);
         }
     }
 
     async resetPassword(req, res) {
         try {
             const errors = {};
-            const newPassword = req.body.newPassword;
+            const newPassword = req.body.password;
             const passwordToken = req.params.token;
+            const { email } = req.params;
 
             const user = await User.findOne({
-                resetToken: passwordToken,
-                resetTokenExpiration: { $gt: Date.now() }
+                email,
+                resetToken: passwordToken
             });
 
-            console.log(user);
+            console.log(newPassword);
 
-            if (!user) {
+            if (user.resetTokenExpiration < Date.now()) {
                 errors.user = 'The token has expired';
                 return res.status(404).json(errors);
             }
+
+            if (!user) {
+                errors.user = 'Error 404';
+                return res.status(404).json(errors);
+            }
+
+            console.log(user);
 
             const hashPassword = await bcrypt.hash(newPassword, 10);
 

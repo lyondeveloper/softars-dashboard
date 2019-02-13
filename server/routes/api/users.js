@@ -28,7 +28,7 @@ router.post('/reset-password/email', (req, res) => {
 //@route POST /api/users/reset-password
 //@desc Reset password
 //@access Private
-router.post('/reset-password/:token', (req, res) => {
+router.post('/reset-password/:token/:email', (req, res) => {
     UserController.resetPassword(req, res);
 });
 

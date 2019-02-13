@@ -74,7 +74,7 @@ class App extends Component {
                             />
                             <Route
                                 exact
-                                path='/reset-password/:token'
+                                path='/reset-password/:token/:email'
                                 component={ResetPassword}
                             />
                             <Switch>

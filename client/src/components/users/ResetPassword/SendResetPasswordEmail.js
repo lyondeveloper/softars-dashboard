@@ -36,8 +36,6 @@ class SendResetPasswordEmail extends Component {
             email: this.state.email
         };
 
-        console.log(this.state.errors);
-
         this.props.sendResetPasswordEmail(data, this.props.history);
     }
 
