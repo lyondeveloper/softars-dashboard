@@ -73,7 +73,6 @@ export const resetPassword = (
     history
 ) => async dispatch => {
     try {
-        console.log(password);
         await axios.post(
             `/api/users/reset-password/${token}/${email}`,
             password

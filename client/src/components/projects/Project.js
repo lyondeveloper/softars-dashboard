@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import Moment from "react-moment";
-import { deleteProject } from "../../actions/projectActions";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import { deleteProject } from '../../actions/projectActions';
 
 class Project extends Component {
     onDeleteProjectClick(id) {
-        if (window.confirm("Are you sure? This action can NOT be undone")) {
+        if (window.confirm('Are you sure? This action can NOT be undone')) {
             this.props.deleteProject(id);
         }
     }
@@ -20,7 +20,7 @@ class Project extends Component {
                     <th>{project.title}</th>
                     <th>{project.description}</th>
                     <th>
-                        <Moment format="YYYY/MM/DD" date={project.date} />
+                        <Moment format='YYYY/MM/DD' date={project.date} />
                     </th>
 
                     <th> {project.client} </th>
@@ -28,26 +28,30 @@ class Project extends Component {
                     <th>
                         <a
                             href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            target='_blank'
+                            rel='noopener noreferrer'
                         >
-                            <span className="link-text">
+                            <span className='link-text'>
                                 Click here to visit
                             </span>
                         </a>
                     </th>
                     <th>
-                        {" "}
+                        {' '}
                         <Link to={`/projects/edit/${project._id}`}>
-                            <i className="fas fa-pencil-alt mr-3 text-warning" />
+                            <i className='fas fa-pencil-alt mr-3 text-warning' />
                         </Link>
                         <i
-                            className="fas fa-trash-alt"
+                            className='fas fa-trash-alt'
                             onClick={this.onDeleteProjectClick.bind(
                                 this,
                                 project._id
                             )}
-                        />{" "}
+                        />{' '}
+                    </th>
+                    <th>
+                        {' '}
+                        <img src={project.image} />{' '}
                     </th>
                 </tr>
             </tbody>

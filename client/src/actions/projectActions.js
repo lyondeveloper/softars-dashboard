@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
     GET_PROJECT,
     GET_PROJECTS,
@@ -7,14 +7,14 @@ import {
     DELETE_PROJECT,
     GET_ERRORS,
     PROJECT_LOADING
-} from "./types";
+} from './types';
 
 //Create Project
 export const addProject = (projectData, history) => async dispatch => {
     try {
-        const res = await axios.post("/api/projects/create", projectData);
+        const res = await axios.post('/api/projects/create', projectData);
 
-        history.push("/projects");
+        history.push('/projects');
 
         dispatch({
             type: ADD_PROJECT,
@@ -32,7 +32,7 @@ export const addProject = (projectData, history) => async dispatch => {
 export const getProjects = () => async dispatch => {
     try {
         dispatch(loadingProject());
-        const res = await axios.get("/api/projects");
+        const res = await axios.get('/api/projects');
 
         dispatch({
             type: GET_PROJECTS,
@@ -93,7 +93,7 @@ export const deleteProject = id => async dispatch => {
     } catch (err) {
         const errors = {};
 
-        errors.notAllowed = "You are not allowed to do this";
+        errors.notAllowed = 'You are not allowed to do this';
 
         dispatch({
             type: GET_ERRORS,

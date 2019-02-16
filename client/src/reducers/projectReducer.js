@@ -5,7 +5,7 @@ import {
     GET_PROJECT,
     DELETE_PROJECT,
     PROJECT_LOADING
-} from "../actions/types";
+} from '../actions/types';
 
 const initialState = {
     projects: [],
