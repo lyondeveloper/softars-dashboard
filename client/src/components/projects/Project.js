@@ -51,7 +51,7 @@ class Project extends Component {
                     </th>
                     <th>
                         {' '}
-                        <img src={project.image} />{' '}
+                        <img src={project.image} alt='Project Image' />{' '}
                     </th>
                 </tr>
             </tbody>
