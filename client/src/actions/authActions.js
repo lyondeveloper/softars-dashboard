@@ -5,7 +5,6 @@ import setAuthToken from '../components/utils/setAuthToken';
 
 export const registerUser = (userData, history) => async dispatch => {
     //Doing request to back-end to register user
-
     try {
         await axios.post('/api/users/register', userData);
 
